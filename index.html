@@ -21,6 +21,21 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         display: ['Pacifico', 'cursive'],
+                    },
+                    // Updated for animations
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out forwards', // Animation for the nav bar
+                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
                     }
                 }
             }
@@ -29,18 +44,15 @@
 </head>
 <body class="bg-brand-yellow text-brand-brown antialiased">
 
-    <!-- Header & Navigation -->
-    <header id="header" class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50">
+    <header id="header" class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50 opacity-0 animate-fade-in">
         <nav class="container mx-auto px-6 py-3">
             <div class="flex items-center justify-between">
-                <!-- Logo -->
                 <div class="flex-shrink-0">
                     <a href="#home" class="flex items-center">
                         <img src="pkmini2.jpg" alt="The Mini Pancake Hut Logo" class="h-20 w-20 rounded-full object-cover shadow-md">
                     </a>
                 </div>
 
-                <!-- Centered Desktop Menu -->
                 <div class="hidden md:flex flex-grow justify-center items-center space-x-12">
                     <a href="#home" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Home</a>
                     <a href="#about" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">About Us</a>
@@ -49,16 +61,13 @@
                     <a href="#contact" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Contact</a>
                 </div>
                 
-                <!-- Mobile Menu Button and Spacer -->
                 <div class="flex-shrink-0">
                     <button id="mobile-menu-button" class="md:hidden">
                         <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
-                    <!-- Spacer for desktop to balance the logo and center the nav links -->
                     <div class="hidden md:block w-20"></div>
                 </div>
             </div>
-            <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden md:hidden mt-4">
                 <a href="#home" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Home</a>
                 <a href="#about" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">About Us</a>
@@ -70,24 +79,19 @@
     </header>
 
     <main>
-        <!-- Home/Hero Section with Video Background -->
         <section id="home" class="relative h-screen flex items-center justify-center text-white text-center overflow-hidden">
-            <!-- Video Background -->
             <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0">
                 <source src="minipancakehutvid.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <!-- Dark Overlay -->
             <div class="absolute top-0 left-0 w-full h-full bg-black/50 z-10"></div>
-            <!-- Content -->
             <div class="relative z-20 p-8">
-                <h1 class="text-5xl md:text-7xl font-bold font-display text-shadow-lg">The Mini Pancake Hut</h1>
-                <p class="text-2xl md:text-3xl mt-4 font-sans font-light">Fluffy Delights in Every Bite</p>
-                <a href="#menu" class="mt-8 inline-block bg-brand-pink text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-brand-pink transition duration-300 transform hover:scale-105 shadow-lg">View Our Menu</a>
+                <h1 class="text-5xl md:text-7xl font-bold font-display text-shadow-lg opacity-0 animate-fade-in-up [animation-delay:0.2s]">The Mini Pancake Hut</h1>
+                <p class="text-2xl md:text-3xl mt-4 font-sans font-light opacity-0 animate-fade-in-up [animation-delay:0.7s]">Fluffy Delights in Every Bite</p>
+                <a href="#menu" class="mt-8 inline-block bg-brand-pink text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-brand-pink transition duration-300 transform hover:scale-105 shadow-lg opacity-0 animate-fade-in-up [animation-delay:1.2s]">View Our Menu</a>
             </div>
         </section>
 
-        <!-- About Us Section -->
         <section id="about" class="py-20 bg-white">
             <div class="container mx-auto px-6">
                 <h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">About The Hut</h2>
@@ -133,14 +137,12 @@
             </div>
         </section>
 
-        <!-- Menu Section -->
         <section id="menu" class="py-20 bg-white">
             <div class="container mx-auto px-6">
                 <h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">Our Menu</h2>
                 <p class="text-center text-gray-600 mb-12">Handcrafted mini pancakes with the finest toppings.</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <!-- Menu Item 1 -->
                     <div class="bg-brand-yellow/30 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                         <img src="https://placehold.co/600x400/DEA654/FFFFFF?text=Classic+Joy" alt="Classic Pancakes" class="w-full h-56 object-cover">
                         <div class="p-6">
@@ -149,7 +151,6 @@
                             <span class="text-xl font-bold text-brand-pink">$8.00</span>
                         </div>
                     </div>
-                    <!-- Menu Item 2 -->
                     <div class="bg-brand-yellow/30 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                         <img src="https://placehold.co/600x400/F565A3/FFFFFF?text=Strawberry+Dream" alt="Strawberry Pancakes" class="w-full h-56 object-cover">
                         <div class="p-6">
@@ -158,7 +159,6 @@
                             <span class="text-xl font-bold text-brand-pink">$10.00</span>
                         </div>
                     </div>
-                    <!-- Menu Item 3 -->
                     <div class="bg-brand-yellow/30 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                         <img src="https://placehold.co/600x400/8B5A2B/FFFFFF?text=Choco-Loco" alt="Chocolate Pancakes" class="w-full h-56 object-cover">
                         <div class="p-6">
@@ -171,7 +171,6 @@
             </div>
         </section>
 
-        <!-- Catering Section -->
         <section id="catering" class="py-20 bg-brand-yellow">
             <div class="container mx-auto px-6">
                  <div class="text-center">
@@ -191,12 +190,10 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
         <section id="contact" class="py-20 bg-white">
             <div class="container mx-auto px-6">
                 <h2 class="text-4xl font-bold text-center text-brand-brown mb-12 font-display">Get In Touch</h2>
                 <div class="flex flex-col lg:flex-row gap-10">
-                    <!-- Contact Form -->
                     <div class="lg:w-1/2 bg-brand-yellow/30 p-8 rounded-lg shadow-md">
                         <h3 class="text-2xl font-bold text-brand-brown mb-6">Send us a Message</h3>
                         <form action="#" method="POST">
@@ -215,7 +212,6 @@
                             <button type="submit" class="w-full bg-brand-pink text-white font-bold py-3 px-6 rounded-full hover:bg-brand-brown transition duration-300 shadow-lg">Send Message</button>
                         </form>
                     </div>
-                    <!-- Contact Info & Map -->
                     <div class="lg:w-1/2">
                          <div class="bg-brand-yellow/30 p-8 rounded-lg shadow-md mb-8">
                             <h3 class="text-2xl font-bold text-brand-brown mb-4">Our Hut</h3>
@@ -240,7 +236,6 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-brand-brown text-white py-8">
         <div class="container mx-auto px-6 text-center">
              <a href="#home" class="flex items-center justify-center mb-4">
@@ -253,16 +248,13 @@
                 <a href="#catering" class="hover:text-brand-pink transition">Catering</a>
                 <a href="#contact" class="hover:text-brand-pink transition">Contact</a>
             </div>
-            <!-- Social Media Icons -->
             <div class="flex justify-center space-x-6 mb-4">
-                <!-- Instagram Icon -->
-                <a href="https://instagram.com/mini.pancakehut" target="_blank" rel="noopener noreferrer" class="text-white hover:text-brand-pink transition">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-white hover:text-brand-pink transition">
                     <span class="sr-only">Instagram</span>
                     <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.258.058 2.13.24 2.887.546.774.307 1.44.73 2.067 1.356s.95 1.294 1.257 2.067c.306.757.488 1.63.546 2.887.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.058 1.258-.24 2.13-.546 2.887-.307.774-.73 1.44-1.356 2.067s-1.294.95-2.067 1.257c-.757.306-1.63.488-2.887.546-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.258-.058-2.13-.24-2.887-.546-.774-.307-1.44-.73-2.067-1.356s-.95-1.294-1.257-2.067c-.306-.757-.488-1.63-.546-2.887-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.058-1.258.24-2.13.546-2.887.307.774.73 1.44 1.356 2.067s1.294.95 2.067 1.257c.757.306 1.63.488 2.887.546 1.266.058 1.646.07 4.85.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.28.058-2.16.242-2.924.545-.78.31-1.448.74-2.09 1.383-.64.643-1.074 1.31-1.383 2.09-.303.765-.487 1.644-.545 2.924-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.058 1.28.242 2.16.545 2.924.31.78.74 1.448 1.383 2.09.643.64 1.31 1.074 2.09 1.383.765.303 1.644.487 2.924.545 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.28-.058 2.16-.242 2.924-.545.78-.31 1.448-.74 2.09-1.383.64-.643 1.074-1.31 1.383-2.09.303-.765-.487-1.644-.545-2.924.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.058-1.28-.242-2.16-.545-2.924-.31-.78-.74-1.448-1.383-2.09-.643-.64-1.31-1.074-2.09-1.383-.765-.303-1.644-.487-2.924-.545-1.28-.058-1.688-.072-4.947-.072z"></path><path d="M12 6.845c-2.836 0-5.155 2.318-5.155 5.155s2.318 5.155 5.155 5.155 5.155-2.318 5.155-5.155-2.318-5.155-5.155-5.155zm0 8.31c-1.745 0-3.155-1.41-3.155-3.155s1.41-3.155 3.155-3.155 3.155 1.41 3.155 3.155-1.41 3.155-3.155 3.155zm5.16-8.82c-.54 0-.98.44-.98.98s.44.98.98.98.98-.44.98-.98-.44-.98-.98-.98z"></path>
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.258.058 2.13.24 2.887.546.774.307 1.44.73 2.067 1.356s.95 1.294 1.257 2.067c.306.757.488 1.63.546 2.887.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.058 1.258-.24 2.13-.546 2.887-.307.774-.73 1.44-1.356 2.067s-1.294.95-2.067 1.257c-.757.306-1.63.488-2.887.546-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.258-.058-2.13-.24-2.887-.546-.774-.307-1.44-.73-2.067-1.356s-.95-1.294-1.257-2.067c-.306-.757-.488-1.63-.546-2.887-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.058-1.258.24-2.13.546-2.887.307.774.73 1.44 1.356 2.067s1.294.95 2.067 1.257c.757.306 1.63.488 2.887.546 1.266.058 1.646.07 4.85.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.28.058-2.16.242-2.924.545-.78.31-1.448.74-2.09 1.383-.64.643-1.074 1.31-1.383 2.09-.303.765-.487 1.644-.545 2.924-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.058 1.28.242 2.16.545 2.924.31.78.74 1.448 1.383 2.09.643.64 1.31 1.074 2.09 1.383.765.303 1.644.487 2.924.545 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.28-.058 2.16-.242 2.924-.545.78-.31 1.448-.74 2.09-1.383.64-.643-1.074-1.31-1.383-2.09.303-.765-.487-1.644-.545-2.924.058-1.28.072-1.688-.072-4.947s-.014-3.667-.072-4.947c-.058-1.28-.242-2.16-.545-2.924-.31-.78-.74-1.448-1.383-2.09-.643-.64-1.31-1.074-2.09-1.383-.765-.303-1.644-.487-2.924-.545-1.28-.058-1.688-.072-4.947-.072z"></path><path d="M12 6.845c-2.836 0-5.155 2.318-5.155 5.155s2.318 5.155 5.155 5.155 5.155-2.318 5.155-5.155-2.318-5.155-5.155-5.155zm0 8.31c-1.745 0-3.155-1.41-3.155-3.155s1.41-3.155 3.155-3.155 3.155 1.41 3.155 3.155-1.41 3.155-3.155 3.155zm5.16-8.82c-.54 0-.98.44-.98.98s.44.98.98.98.98-.44.98-.98-.44-.98-.98-.98z"></path>
                     </svg>
                 </a>
-                <!-- Facebook Icon -->
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="text-white hover:text-brand-pink transition">
                     <span class="sr-only">Facebook</span>
                     <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -270,7 +262,7 @@
                     </svg>
                 </a>
             </div>
-            <p>&copy; 2025 The Mini Pancake Hut. All Rights Reserved.</p>
+            <p>© 2025 The Mini Pancake Hut. All Rights Reserved.</p>
         </div>
     </footer>
 
