@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mini Pancake Hut - Fluffy Delights</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-yellow': '#FDF5C1',
+                        'brand-pink': '#F565A3',
+                        'brand-brown': '#8B5A2B',
+                        'brand-tan': '#DEA654',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Pacifico', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for hero background */
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://placehold.co/1200x800/DEA654/FFFFFF?text=Delicious+Pancakes');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-brand-yellow text-brand-brown antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#home" class="flex items-center">
+                        <img src="pkmini2.jpg" alt="The Mini Pancake Hut Logo" class="h-16 w-16 rounded-full object-cover shadow-md">
+                    </a>
+                </div>
+
+                <!-- Centered Desktop Menu -->
+                <div class="hidden md:flex flex-grow justify-center items-center space-x-8">
+                    <a href="#home" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Home</a>
+                    <a href="#menu" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Menu</a>
+                    <a href="#catering" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Catering</a>
+                    <a href="#contact" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Contact</a>
+                </div>
+                
+                <!-- Mobile Menu Button and Spacer -->
+                <div class="flex-shrink-0">
+                    <button id="mobile-menu-button" class="md:hidden">
+                        <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                    <!-- Spacer for desktop to balance the logo and center the nav links -->
+                    <div class="hidden md:block w-16"></div>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4">
+                <a href="#home" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Home</a>
+                <a href="#menu" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Menu</a>
+                <a href="#catering" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Catering</a>
+                <a href="#contact" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home/Hero Section -->
+        <section id="home" class="hero-bg h-screen flex items-center justify-center text-white text-center">
+            <div class="bg-black/40 p-8 md:p-12 rounded-xl">
+                <h1 class="text-5xl md:text-7xl font-bold font-display text-shadow-lg">The Mini Pancake Hut</h1>
+                <p class="text-2xl md:text-3xl mt-4 font-sans font-light">Fluffy Delights in Every Bite</p>
+                <a href="#menu" class="mt-8 inline-block bg-brand-pink text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-brand-pink transition duration-300 transform hover:scale-105 shadow-lg">View Our Menu</a>
+            </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section id="menu" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">Our Menu</h2>
+                <p class="text-center text-gray-600 mb-12">Handcrafted mini pancakes with the finest toppings.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Menu Item 1 -->
+                    <div class="bg-brand-yellow/30 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                        <img src="https://placehold.co/600x400/DEA654/FFFFFF?text=Classic+Joy" alt="Classic Pancakes" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-brand-brown mb-2">Classic Joy</h3>
+                            <p class="text-gray-700 mb-4">The timeless classic. Fluffy mini pancakes served with butter and a drizzle of maple syrup.</p>
+                            <span class="text-xl font-bold text-brand-pink">$8.00</span>
+                        </div>
+                    </div>
+                    <!-- Menu Item 2 -->
+                    <div class="bg-brand-yellow/30 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                        <img src="https://placehold.co/600x400/F565A3/FFFFFF?text=Strawberry+Dream" alt="Strawberry Pancakes" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-brand-brown mb-2">Strawberry Dream</h3>
+                            <p class="text-gray-700 mb-4">Topped with fresh strawberries, whipped cream, and a dusting of powdered sugar.</p>
+                            <span class="text-xl font-bold text-brand-pink">$10.00</span>
+                        </div>
+                    </div>
+                    <!-- Menu Item 3 -->
+                    <div class="bg-brand-yellow/30 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                        <img src="https://placehold.co/600x400/8B5A2B/FFFFFF?text=Choco-Loco" alt="Chocolate Pancakes" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-brand-brown mb-2">Choco-Loco</h3>
+                            <p class="text-gray-700 mb-4">A chocolate lover's paradise! Drizzled with rich chocolate sauce and topped with chocolate chips.</p>
+                            <span class="text-xl font-bold text-brand-pink">$9.50</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catering Section -->
+        <section id="catering" class="py-20 bg-brand-yellow">
+            <div class="container mx-auto px-6">
+                 <div class="text-center">
+                    <h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">Catering</h2>
+                    <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Bring the fluffy delights of The Mini Pancake Hut to your next event! Perfect for parties, corporate events, and weddings.</p>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-10 bg-white p-8 rounded-xl shadow-lg">
+                    <div class="md:w-1/2">
+                         <img src="https://placehold.co/600x400/FDF5C1/8B5A2B?text=Event+Setup" alt="Catering Setup" class="rounded-lg shadow-md w-full">
+                    </div>
+                    <div class="md:w-1/2">
+                        <h3 class="text-3xl font-bold text-brand-brown mb-4">Let's Get this Party Started!</h3>
+                        <p class="text-gray-700 mb-6">Our live mini pancake station is a guaranteed crowd-pleaser. We provide everything you need for a delicious and memorable experience. Contact us today to get a custom quote for your event.</p>
+                        <a href="#contact" class="inline-block bg-brand-pink text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-brand-brown transition duration-300 transform hover:scale-105 shadow-lg">Inquire Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-brand-brown mb-12 font-display">Get In Touch</h2>
+                <div class="flex flex-col lg:flex-row gap-10">
+                    <!-- Contact Form -->
+                    <div class="lg:w-1/2 bg-brand-yellow/30 p-8 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold text-brand-brown mb-6">Send us a Message</h3>
+                        <form action="#" method="POST">
+                            <div class="mb-4">
+                                <label for="name" class="block text-brand-brown font-semibold mb-2">Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-brand-brown font-semibold mb-2">Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="block text-brand-brown font-semibold mb-2">Message</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-brand-pink text-white font-bold py-3 px-6 rounded-full hover:bg-brand-brown transition duration-300 shadow-lg">Send Message</button>
+                        </form>
+                    </div>
+                    <!-- Contact Info & Map -->
+                    <div class="lg:w-1/2">
+                         <div class="bg-brand-yellow/30 p-8 rounded-lg shadow-md mb-8">
+                            <h3 class="text-2xl font-bold text-brand-brown mb-4">Our Hut</h3>
+                            <p class="text-gray-700 mb-2"><strong>Address:</strong> 123 Fluffy Lane, Foodie Town, USA</p>
+                            <p class="text-gray-700 mb-2"><strong>Phone:</strong> (555) 123-4567</p>
+                            <p class="text-gray-700"><strong>Hours:</strong> Mon - Sun, 9:00 AM - 8:00 PM</p>
+                         </div>
+                         <div class="rounded-lg shadow-md overflow-hidden h-80">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3463.784226177501!2d-95.3698022848981!3d29.75437598198944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640bf3d5c1b1c3b%3A0x6b8f3de4f9d8d672!2sDowntown%20Aquarium!5e0!3m2!1sen!2sus!4v1684343160123!5m2!1sen!2sus" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-brown text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+             <a href="#home" class="flex items-center justify-center mb-4">
+                <img src="pkmini2.jpg" alt="The Mini Pancake Hut Logo" class="h-16 w-16 rounded-full object-cover shadow-md">
+            </a>
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#home" class="hover:text-brand-pink transition">Home</a>
+                <a href="#menu" class="hover:text-brand-pink transition">Menu</a>
+                <a href="#catering" class="hover:text-brand-pink transition">Catering</a>
+                <a href="#contact" class="hover:text-brand-pink transition">Contact</a>
+            </div>
+            <p>&copy; 2024 The Mini Pancake Hut. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        const mobileNavLinks = mobileMenu.getElementsByTagName('a');
+        for (let link of mobileNavLinks) {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        }
+    </script>
+
+</body>
+</html>
