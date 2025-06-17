@@ -356,5 +356,16 @@
         });
     </script>
 
+
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+	createChat({
+		webhookUrl: 'https://n8n.joemur.com/webhook/99d91aea-a9be-46db-ab40-85bf1fa36772/chat', 
+        initialMessages: ['Hi, Nathan here! Welcome to Mini Pancake Hut! 🥞 How can I help you today?']
+	});
+</script>
+
 </body>
 </html>
