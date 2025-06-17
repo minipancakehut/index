@@ -93,7 +93,7 @@
             </div>
         </section>
 
-        <!-- About Section: Changed scroll-mt-28 to scroll-mt-24 -->
+        <!-- About Section -->
         <section id="about" class="py-20 scroll-mt-24">
             <div class="container mx-auto px-6">
                 <h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">About The Hut</h2>
@@ -139,7 +139,7 @@
             </div>
         </section>
 
-        <!-- Menu Section: Changed scroll-mt-28 to scroll-mt-24 -->
+        <!-- Menu Section -->
         <section id="menu" class="py-20 bg-white scroll-mt-24">
             <div class="container mx-auto px-6">
                 <h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">Our Menu</h2>
@@ -177,7 +177,7 @@
             </div>
         </section>
 
-        <!-- Catering Section: Changed scroll-mt-28 to scroll-mt-24 -->
+        <!-- Catering Section -->
         <section id="catering" class="py-20 bg-brand-yellow scroll-mt-24">
             <div class="container mx-auto px-6">
                  <div class="text-center">
@@ -197,33 +197,53 @@
             </div>
         </section>
 
-        <!-- Contact Section: Changed scroll-mt-28 to scroll-mt-24 -->
+        <!-- Contact Section -->
         <section id="contact" class="py-20 bg-white scroll-mt-24">
             <div class="container mx-auto px-6">
                 <h2 class="text-4xl font-bold text-center text-brand-brown mb-12 font-display">Get In Touch</h2>
                 <div class="flex flex-col lg:flex-row gap-10">
-                    <div class="lg:w-1/2 bg-brand-yellow/30 p-8 rounded-lg shadow-md">
-                        <h3 class="text-2xl font-bold text-brand-brown mb-6">Send us a Message</h3>
-                        <form action="#" method="POST">
-                            <div class="mb-4">
-                                <label for="name" class="block text-brand-brown font-semibold mb-2">Name</label>
-                                <input type="text" id="name" name="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="email" class="block text-brand-brown font-semibold mb-2">Email</label>
-                                <input type="email" id="email" name="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="message" class="block text-brand-brown font-semibold mb-2">Message</label>
-                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-brand-pink text-white font-bold py-3 px-6 rounded-full hover:bg-brand-brown transition duration-300 shadow-lg">Send Message</button>
-                        </form>
+                    <div class="lg:w-1/2 bg-brand-yellow/30 p-8 rounded-lg shadow-md min-h-[480px] flex flex-col justify-center">
+                        <!-- Form Container -->
+                        <div id="form-container">
+                            <h3 class="text-2xl font-bold text-brand-brown mb-6">Send us a Message</h3>
+                            <!-- Add an ID to your form -->
+                            <form id="contactForm" action="" method="POST">
+                                <div class="flex flex-col md:flex-row md:space-x-4">
+                                    <div class="mb-4 md:w-1/2">
+                                        <label for="firstName" class="block text-brand-brown font-semibold mb-2">First Name</label>
+                                        <input type="text" id="firstName" name="firstName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
+                                    </div>
+                                    <div class="mb-4 md:w-1/2">
+                                        <label for="lastName" class="block text-brand-brown font-semibold mb-2">Last Name</label>
+                                        <input type="text" id="lastName" name="lastName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="phone" class="block text-brand-brown font-semibold mb-2">Phone Number</label>
+                                    <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="email" class="block text-brand-brown font-semibold mb-2">Email</label>
+                                    <input type="email" id="email" name="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="message" class="block text-brand-brown font-semibold mb-2">Message</label>
+                                    <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required></textarea>
+                                </div>
+                                <button type="submit" class="w-full bg-brand-pink text-white font-bold py-3 px-6 rounded-full hover:bg-brand-brown transition duration-300 shadow-lg">Send Message</button>
+                            </form>
+                        </div>
+                        <!-- Thank You Message (Initially Hidden) -->
+                        <div id="thankYouMessage" class="hidden text-center">
+                            <svg class="mx-auto h-16 w-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <h3 class="text-3xl font-bold text-brand-brown font-display mt-4 animate-fade-in-up">Thank You!</h3>
+                            <p class="text-gray-700 text-lg mt-2 animate-fade-in-up [animation-delay:0.3s]">Your message has been sent. We'll be in touch soon.</p>
+                        </div>
                     </div>
                     <div class="lg:w-1/2">
                          <div class="bg-brand-yellow/30 p-8 rounded-lg shadow-md mb-8">
                             <h3 class="text-2xl font-bold text-brand-brown mb-4">Our Hut</h3>
-                            <p class="text-gray-700 mb-2"><strong>Address:</strong> 123 Fluffy Lane, Houston, Tx</p>
+                            <p class="text-gray-700 mb-2"><strong>Address:</strong> 123 Fluffy Lane, Houston, TX</p>
                             <p class="text-gray-700 mb-2"><strong>Phone:</strong> (555) 123-4567</p>
                             <p class="text-gray-700"><strong>Hours:</strong> Mon - Sun, 9:00 AM - 8:00 PM</p>
                          </div>
@@ -290,6 +310,50 @@
                 mobileMenu.classList.add('hidden');
             });
         }
+
+        // --- SCRIPT FOR FORM SUBMISSION ---
+        
+        // Get the elements from the page
+        const contactForm = document.getElementById('contactForm');
+        const formContainer = document.getElementById('form-container');
+        const thankYouMessage = document.getElementById('thankYouMessage');
+
+        // Add an event listener for the form's 'submit' event
+        contactForm.addEventListener('submit', function(event) {
+            // Prevent the default form submission which reloads the page
+            event.preventDefault();
+
+            // Create a FormData object from the form element
+            const formData = new FormData(contactForm);
+            
+            // Use the fetch API to send the form data to your webhook
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json' 
+                }
+            })
+            .then(response => {
+                // Check if the submission was successful (status code 200-299)
+                if (response.ok) {
+                    // Hide the form container
+                    formContainer.classList.add('hidden');
+                    // Show the "Thank You" message
+                    thankYouMessage.classList.remove('hidden');
+                } else {
+                    // If the server responds with an error, show a custom message
+                    response.json().then(data => {
+                        alert(data.message || 'Sorry, there was an error sending your message. Please try again later.');
+                    });
+                }
+            })
+            .catch(error => {
+                // Handle network errors (e.g., no internet connection)
+                console.error('Form submission error:', error);
+                alert('Oops! There was a problem submitting your form. Please check your connection and try again.');
+            });
+        });
     </script>
 
 </body>
