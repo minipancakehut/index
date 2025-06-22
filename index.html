@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcVYGkrAAAAAPYEL_TM5yH2ZQjrABWCrwvvL4s4"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -40,10 +43,13 @@
             }
         }
     </script>
+
+
+
+
 </head>
 <body class="bg-brand-white text-brand-brown antialiased">
 
-    <!-- Sticky Header -->
     <header id="header" class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50 opacity-0 animate-fade-in">
         <nav class="container mx-auto px-6 py-3">
             <div class="flex items-center justify-between">
@@ -79,7 +85,6 @@
     </header>
 
     <main>
-        <!-- Hero Section -->
         <section id="home" class="relative h-screen flex items-center justify-center text-white text-center overflow-hidden">
             <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-0 animate-fade-in">
                 <source src="minipancakehutvid.mp4" type="video/mp4">
@@ -93,7 +98,6 @@
             </div>
         </section>
 
-        <!-- About Section -->
         <section id="about" class="py-20 scroll-mt-24">
             <div class="container mx-auto px-6">
                 <h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">About The Hut</h2>
@@ -139,14 +143,12 @@
             </div>
         </section>
 
-        <!-- Menu Section -->
         <section id="menu" class="py-20 bg-white scroll-mt-24">
             <div class="container mx-auto px-6">
                 <h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">Our Menu</h2>
                 <p class="text-center text-gray-600 mb-12">Handcrafted mini pancakes with the finest toppings.</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <!-- Menu Item -->
                     <div class="bg-brand-yellow/30 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                         <img src="https://placehold.co/600x400/DEA654/FFFFFF?text=Classic+Joy" alt="Classic Pancakes" class="w-full h-56 object-cover">
                         <div class="p-6">
@@ -155,7 +157,6 @@
                             <span class="text-xl font-bold text-brand-pink">$8.00</span>
                         </div>
                     </div>
-                    <!-- Menu Item -->
                     <div class="bg-brand-yellow/30 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                         <img src="https://placehold.co/600x400/F565A3/FFFFFF?text=Strawberry+Dream" alt="Strawberry Pancakes" class="w-full h-56 object-cover">
                         <div class="p-6">
@@ -164,7 +165,6 @@
                             <span class="text-xl font-bold text-brand-pink">$10.00</span>
                         </div>
                     </div>
-                    <!-- Menu Item -->
                     <div class="bg-brand-yellow/30 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                         <img src="https://placehold.co/600x400/8B5A2B/FFFFFF?text=Choco-Loco" alt="Chocolate Pancakes" class="w-full h-56 object-cover">
                         <div class="p-6">
@@ -177,7 +177,6 @@
             </div>
         </section>
 
-        <!-- Catering Section -->
         <section id="catering" class="py-20 bg-brand-yellow scroll-mt-24">
             <div class="container mx-auto px-6">
                  <div class="text-center">
@@ -197,17 +196,14 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
         <section id="contact" class="py-20 bg-white scroll-mt-24">
             <div class="container mx-auto px-6">
                 <h2 class="text-4xl font-bold text-center text-brand-brown mb-12 font-display">Contact Us</h2>
                 <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Call, live chat, or submit the form below!</p>
                 <div class="flex flex-col lg:flex-row gap-10">
                     <div class="lg:w-1/2 bg-brand-yellow/30 p-8 rounded-lg shadow-md min-h-[480px] flex flex-col justify-center">
-                        <!-- Form Container -->
                         <div id="form-container">
                             <h3 class="text-2xl font-bold text-brand-brown mb-6">Send us a Message</h3>
-                            <!-- Add an ID to your form -->
                             <form id="contactForm" action="https://n8n.joemur.com/webhook/da6cd7c2-d9f2-4371-9efd-e021bd060cc7" method="POST">
                                 <div class="flex flex-col md:flex-row md:space-x-4">
                                     <div class="mb-4 md:w-1/2">
@@ -231,10 +227,10 @@
                                     <label for="message" class="block text-brand-brown font-semibold mb-2">Message</label>
                                     <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required></textarea>
                                 </div>
+                                <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
                                 <button type="submit" class="w-full bg-brand-pink text-white font-bold py-3 px-6 rounded-full hover:bg-brand-brown transition duration-300 shadow-lg">Send Message</button>
                             </form>
                         </div>
-                        <!-- Thank You Message (Initially Hidden) -->
                         <div id="thankYouMessage" class="hidden text-center">
                             <svg class="mx-auto h-16 w-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             <h3 class="text-3xl font-bold text-brand-brown font-display mt-4 animate-fade-in-up">Thank You!</h3>
@@ -312,47 +308,49 @@
             });
         }
 
-        // --- SCRIPT FOR FORM SUBMISSION ---
+        // --- SCRIPT FOR FORM SUBMISSION WITH RECAPTCHA ---
         
-        // Get the elements from the page
         const contactForm = document.getElementById('contactForm');
         const formContainer = document.getElementById('form-container');
         const thankYouMessage = document.getElementById('thankYouMessage');
 
-        // Add an event listener for the form's 'submit' event
         contactForm.addEventListener('submit', function(event) {
-            // Prevent the default form submission which reloads the page
             event.preventDefault();
 
-            // Create a FormData object from the form element
-            const formData = new FormData(contactForm);
-            
-            // Use the fetch API to send the form data to your webhook
-            fetch(contactForm.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json' 
-                }
-            })
-            .then(response => {
-                // Check if the submission was successful (status code 200-299)
-                if (response.ok) {
-                    // Hide the form container
-                    formContainer.classList.add('hidden');
-                    // Show the "Thank You" message
-                    thankYouMessage.classList.remove('hidden');
-                } else {
-                    // If the server responds with an error, show a custom message
-                    response.json().then(data => {
-                        alert(data.message || 'Sorry, there was an error sending your message. Please try again later.');
+            grecaptcha.ready(function() {
+                // REMEMBER TO REPLACE 'YOUR_SITE_KEY'
+                grecaptcha.execute('6LcVYGkrAAAAAPYEL_TM5yH2ZQjrABWCrwvvL4s4', {action: 'submit'}).then(function(token) {
+                    
+                    document.getElementById('g-recaptcha-response').value = token;
+
+                    const formData = new FormData(contactForm);
+                    
+                    fetch(contactForm.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json' 
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            formContainer.classList.add('hidden');
+                            thankYouMessage.classList.remove('hidden');
+                        } else {
+                            response.json().then(data => {
+                                alert(data.message || 'Sorry, there was an error sending your message. Please try again later.');
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Form submission network error:', error);
+                        alert('Oops! There was a problem submitting your form. Please check your connection and try again.');
                     });
-                }
-            })
-            .catch(error => {
-                // Handle network errors (e.g., no internet connection)
-                console.error('Form submission error:', error);
-                alert('Oops! There was a problem submitting your form. Please check your connection and try again.');
+                }).catch(error => {
+                    // THIS IS THE NEW, IMPORTANT PART
+                    console.error('reCAPTCHA execution error:', error);
+                    alert('Could not verify reCAPTCHA. Please check if you have an ad-blocker enabled or try again.');
+                });
             });
         });
     </script>
@@ -360,12 +358,12 @@
 
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 <script type="module">
-	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-	createChat({
-		webhookUrl: 'https://n8n.joemur.com/webhook/99d91aea-a9be-46db-ab40-85bf1fa36772/chat', 
+    createChat({
+        webhookUrl: 'https://n8n.joemur.com/webhook/99d91aea-a9be-46db-ab40-85bf1fa36772/chat', 
         initialMessages: ['Hi, Nathan here! Welcome to Mini Pancake Hut! 🥞 How can I help you today?']
-	});
+    });
 </script>
 
 </body>
