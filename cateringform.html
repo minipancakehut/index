@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Pancake Hut Catering Form</title>
+<style>
+/* --- GLOBAL STYLES --- */
+body {
+font-family: -apple-system, BlinkMacMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+margin: 0;
+background-color: #f8f8f8;
+color: #1a1a1a; /* Default body text color (black) */
+display: flex;
+justify-content: center;
+align-items: flex-start; /* Align to top in case content is short */
+min-height: 100vh;
+padding-top: 40px; /* Add some top padding to the body */
+padding-bottom: 40px; /* Add some bottom padding for smaller screens/more content */
+box-sizing: border-box; /* Include padding in height */
+}
+
+.container {
+background-color: #ffffff;
+padding: 40px;
+border-radius: 0;
+border: 2px solid #000000;
+box-shadow: none;
+width: 90%;
+max-width: 600px;
+box-sizing: border-box;
+position: relative;
+}
+
+h1 {
+text-align: left;
+background-color: #f24b7b;
+color: transparent;
+-webkit-background-clip: text;
+background-clip: text;
+margin-bottom: 30px;
+font-weight: 700;
+font-size: 2.5em;
+text-transform: uppercase;
+letter-spacing: -0.02em;
+display: block;
+}
+
+h1 .black-text {
+color: #1a1a1a;
+background-image: none;
+-webkit-background-clip: unset;
+background-clip: unset;
+}
+
+p {
+color: #1a1a1a; /* Default paragraph color */
+margin-top: 10px;
+margin-bottom: 20px;
+line-height: 1.6;
+font-size: 0.95em;
+}
+
+.accent-paragraph {
+color: #f24b7b;
+}
+
+/* --- SECTION STYLES --- */
+.section {
+margin-bottom: 30px;
+padding-bottom: 25px;
+border-bottom: 1px solid #eee;
+}
+.section:last-child {
+border-bottom: none;
+padding-bottom: 0;
+margin-bottom: 40px;
+}
+
+h2 {
+color: #1a1a1a;
+margin-top: 0;
+margin-bottom: 15px;
+font-size: 1.5em;
+font-weight: 600;
+}
+
+h3 {
+color: #1a1a1a;
+margin-top: 25px;
+margin-bottom: 15px;
+font-size: 1.2em;
+font-weight: 600;
+}
+
+.field-group {
+margin-bottom: 25px;
+}
+.field-group:last-of-type {
+margin-bottom: 0;
+}
+
+label {
+display: block;
+margin-bottom: 8px;
+font-weight: 600;
+color: #1a1a1a;
+font-size: 1em;
+}
+
+.required-asterisk {
+color: #e53935;
+font-weight: bold;
+margin-left: 3px;
+}
+
+/* --- INPUT FIELD STYLES --- */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+width: calc(100% - 24px);
+padding: 12px;
+margin-top: 0;
+border: 2px solid #000000;
+border-radius: 0;
+font-size: 1em;
+box-sizing: border-box;
+background-color: #ffffff;
+color: #1a1a1a;
+transition: border-color 0.1s ease, box-shadow 0.1s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+outline: none;
+border-color: #000000;
+box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+input::placeholder,
+textarea::placeholder {
+color: #888;
+opacity: 1;
+}
+
+input[type="number"] {
+-moz-appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+/* --- FIELDSET & LEGEND STYLES --- */
+fieldset {
+border: none;
+padding: 0;
+margin: 0;
+}
+legend {
+font-size: 1.5em;
+font-weight: 600;
+color: #1a1a1a;
+margin-bottom: 15px;
+padding: 0;
+}
+
+/* --- CHECKBOX STYLES --- */
+.checkbox-group {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+gap: 10px;
+margin-top: 10px;
+}
+
+.checkbox-label {
+display: flex;
+align-items: center;
+font-weight: 400;
+color: #1a1a1a;
+cursor: pointer;
+margin-bottom: 5px;
+padding: 5px 0;
+transition: background-color 0.2s ease;
+}
+.checkbox-label:hover:not(.disabled-checkbox-label) {
+background-color: #f0f0f0;
+border-radius: 0;
+}
+
+.opt-in-checkbox {
+margin-top: 20px;
+margin-bottom: 20px;
+}
+
+.checkbox-label input[type="checkbox"] {
+width: auto;
+height: auto;
+margin-right: 10px;
+border: 1px solid #000;
+border-radius: 0;
+transform: scale(1.0);
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+background-color: #fff;
+position: relative;
+cursor: pointer;
+width: 18px;
+height: 18px;
+flex-shrink: 0;
+transition: all 0.2s ease;
+}
+.checkbox-label input[type="checkbox"]:checked {
+background-color: #1a1a1a;
+border-color: #1a1a1a;
+}
+.checkbox-label input[type="checkbox"]:checked::after {
+content: '';
+position: absolute;
+top: 3px;
+left: 5px;
+width: 5px;
+height: 10px;
+border: solid #fff;
+border-width: 0 2px 2px 0;
+transform: rotate(45deg);
+}
+.checkbox-label input[type="checkbox"]:focus {
+outline: 2px solid rgba(0, 0, 0, 0.3);
+outline-offset: 2px;
+}
+
+.disabled-checkbox-label {
+color: #aaa;
+cursor: not-allowed;
+}
+.disabled-checkbox-label input[type="checkbox"] {
+opacity: 0.4 !important;
+pointer-events: none !important;
+background-color: #e0e0e0 !important;
+border-color: #c0c0c0 !important;
+}
+.disabled-checkbox-label input[type="checkbox"]:checked::after {
+border-color: #c0c0c0 !important;
+}
+
+/* --- ERROR MESSAGE STYLES --- */
+.error-message {
+color: #e53935;
+font-size: 0.9em;
+margin-top: 5px;
+margin-bottom: 15px;
+display: none;
+}
+
+/* --- BUTTON STYLES --- */
+button {
+background-color: #f24b7b;
+color: white;
+padding: 15px 25px;
+border: 2px solid #f24b7b;
+border-radius: 0;
+font-size: 1.1em;
+cursor: pointer;
+transition: background-color 0.2s ease, color 0.2s ease;
+width: 100%;
+margin-top: 30px;
+font-weight: 600;
+text-transform: uppercase;
+}
+
+button:hover {
+background-color: #d13a69;
+color: #ffffff;
+border-color: #d13a69;
+}
+
+/* --- CONFIRMATION SCREEN STYLES --- */
+#confirmationScreen {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: auto;
+min-height: 100%;
+background-color: #ffffff;
+padding: 20px 40px 40px 40px;
+box-sizing: border-box;
+border-radius: 0;
+border: 2px solid #000000;
+box-shadow: none;
+display: none;
+flex-direction: column;
+justify-content: flex-start;
+gap: 15px;
+}
+#confirmationScreen h2 {
+text-align: center;
+font-size: 2em;
+margin-bottom: 0;
+font-weight: 700;
+}
+
+#orderSummaryContainer {
+display: flex;
+justify-content: center;
+align-items: flex-start;
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+
+.summary-details-box {
+border: 2px solid #000000;
+padding: 20px;
+background-color: #ffffff;
+font-size: 0.95em;
+line-height: 1.5;
+/* Removed max-height and overflow-y to fit all content */
+box-sizing: border-box;
+width: 100%;
+max-width: 450px;
+}
+.summary-details-box h3 {
+font-size: 1.1em;
+margin-top: 0;
+margin-bottom: 15px;
+font-weight: 700;
+color: #1a1a1a;
+}
+.summary-details-box ul {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+.summary-details-box ul li {
+margin-bottom: 8px;
+font-size: 1em;
+}
+.summary-details-box ul li strong {
+font-weight: 700;
+color: #1a1a1a;
+margin-right: 5px;
+}
+
+#confirmationScreen .button-group {
+display: flex;
+gap: 20px;
+margin-top: 0;
+padding-top: 0;
+justify-content: center;
+}
+#confirmationScreen .button-group button {
+width: 50%;
+margin-top: 0;
+font-size: 1em;
+}
+#confirmSubmitBtn {
+background-color: #1a1a1a;
+border-color: #1a1a1a;
+}
+#confirmSubmitBtn:hover {
+background-color: #333;
+border-color: #333;
+}
+#editOrderBtn {
+background-color: #ffffff;
+color: #1a1a1a;
+border-color: #1a1a1a;
+}
+#editOrderBtn:hover {
+background-color: #f0f0f0;
+color: #1a1a1a;
+border-color: #1a1a1a;
+}
+
+
+/* --- FINAL THANK YOU SCREEN STYLES --- */
+#finalConfirmationMessage { /* Changed from .confirmation to id selector */
+position: absolute; /* Position over the form */
+top: 0;
+left: 0;
+width: 100%;
+height: 100%; /* Ensure it covers the whole area */
+background-color: #ffffff;
+padding: 40px; /* Consistent padding with container */
+box-sizing: border-box;
+border-radius: 0;
+border: 2px solid #000000;
+box-shadow: none;
+display: none; /* Hidden by default */
+flex-direction: column;
+justify-content: center; /* Center content vertically */
+align-items: center; /* Center content horizontally */
+text-align: center;
+}
+#finalConfirmationMessage h2 { /* Style for the "Thank you!" title */
+font-size: 2em; /* Make it prominent */
+font-weight: 700;
+color: #1a1a1a;
+margin-bottom: 20px; /* Space below title */
+}
+#finalConfirmationMessage p { /* Style for the message text */
+font-size: 1.1em;
+line-height: 1.5;
+color: #1a1a1a;
+max-width: 80%; /* Prevent lines from getting too long */
+margin: 0 auto 15px auto; /* Center and add bottom margin */
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Mini Pancake Hut <span class="black-text">Catering Form</span></h1>
+<p>Please provide your details and customize your catering experience.</p>
+
+<form id="pancakeForm">
+<div class="section">
+<h2>Your Contact Information:</h2>
+<div class="field-group">
+<label for="firstName">First Name <span class="required-asterisk">*</span></label>
+<input type="text" id="firstName" name="firstName" required placeholder="First Name">
+<div class="error-message" id="firstNameError">First Name is required.</div>
+</div>
+
+<div class="field-group">
+<label for="lastName">Last Name <span class="required-asterisk">*</span></label>
+<input type="text" id="lastName" name="lastName" required placeholder="Last Name">
+<div class="error-message" id="lastNameError">Last Name is required.</div>
+</div>
+
+<div class="field-group">
+<label for="email">Email <span class="required-asterisk">*</span></label>
+<input type="email" id="email" name="email" required placeholder="your.email@example.com">
+<div class="error-message" id="emailError">Valid Email is required.</div>
+<label class="checkbox-label opt-in-checkbox">
+<input type="checkbox" name="newsletterOptIn" value="yes"> Sign up for news and updates
+</label>
+</div>
+
+<div class="field-group">
+<label for="phone">Phone Number <span class="required-asterisk">*</span></label>
+<input type="tel" id="phone" name="phone" pattern="^\d{10}$" placeholder="1234567890" required>
+<div class="error-message" id="phoneError">Phone Number (10 digits) is required.</div>
+</div>
+</div>
+
+<div class="section">
+<h2>Event Details:</h2>
+<div class="field-group">
+<label for="eventSize">Size of Event (Minimum 25 people) <span class="required-asterisk">*</span></label>
+<input type="number" id="eventSize" name="eventSize" min="25" required placeholder="e.g., 50">
+<div class="error-message" id="eventSizeError">Minimum of 25 people required.</div>
+</div>
+
+<div class="field-group">
+<label for="eventDate">Date of Event <span class="required-asterisk">*</span></label>
+<input type="date" id="eventDate" name="eventDate" required>
+<div class="error-message" id="eventDateError">Event Date is required.</div>
+</div>
+</div>
+
+<div class="section">
+<fieldset>
+<legend>Choose Your Toppings:</legend>
+<p class="accent-paragraph">You can select up to **5 Toppings**.</p>
+<div class="checkbox-group">
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="Pecans"> Pecans</label>
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="Oreo Crumbs"> Oreo Crumbs</label>
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="Rainbow Sprinkles"> Rainbow Sprinkles</label>
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="Fruity Pebbles"> Fruity Pebbles</label>
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="M&M's"> M&M's</label>
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="Coconut Flakes"> Coconut Flakes</label>
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="Mini Trix"> Mini Trix</label>
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="Mini Chocolate Chips"> Mini Chocolate Chips</label>
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="Mini Cinnamon Crunch"> Mini Cinnamon Crunch</label>
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="Whipped Cream"> Whipped Cream</label>
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="Churro Mix"> Churro Mix</label>
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="Almonds"> Almonds</label>
+<label class="checkbox-label"><input type="checkbox" name="toppings" value="Mini Marshmallows"> Mini Marshmallows</label>
+</div>
+</fieldset>
+</div>
+
+<div class="section">
+<fieldset>
+<legend>Select Your Drizzle:</legend>
+<p class="accent-paragraph">You can select up to **5 Drizzles**.</p>
+<div class="checkbox-group">
+<label class="checkbox-label"><input type="checkbox" name="drizzle" value="Maple Syrup"> Maple Syrup</label>
+<label class="checkbox-label"><input type="checkbox" name="drizzle" value="Condensed Milk"> Condensed Milk</label>
+<label class="checkbox-label"><input type="checkbox" name="drizzle" value="Nutella"> Nutella</label>
+<label class="checkbox-label"><input type="checkbox" name="drizzle" value="Chocolate Syrup"> Chocolate Syrup</label>
+<label class="checkbox-label"><input type="checkbox" name="drizzle" value="Caramel"> Caramel</label>
+<label class="checkbox-label"><input type="checkbox" name="drizzle" value="Strawberry Syrup"> Strawberry Syrup</label>
+<label class="checkbox-label"><input type="checkbox" name="drizzle" value="Dulce de Leche"> Dulce de Leche</label>
+<label class="checkbox-label"><input type="checkbox" name="drizzle" value="Strawberry Jam"> Strawberry Jam</label>
+</div>
+</fieldset>
+</div>
+
+<div class="section">
+<fieldset>
+<legend>Add-Ons:</legend>
+<p class="accent-paragraph">Additional charge applies for Add-Ons.</p>
+<h3>Fruit:</h3>
+<div class="checkbox-group">
+<label class="checkbox-label"><input type="checkbox" name="fruit" value="Strawberries"> Strawberries</label>
+<label class="checkbox-label"><input type="checkbox" name="fruit" value="Bananas"> Bananas</label>
+<label class="checkbox-label"><input type="checkbox" name="fruit" value="Blueberries"> Blueberries</label>
+</div>
+
+<h3>Cold Brew Coffee:</h3>
+<div class="checkbox-group">
+<label class="checkbox-label"><input type="checkbox" name="coldBrew" value="Cold Brew Coffee"> Cold Brew Coffee</label>
+<label class="checkbox-label"><input type="checkbox" name="coldBrew" value="Iced Coffee"> Iced Coffee</label>
+</div>
+</fieldset>
+</div>
+
+<div class="section">
+<h2>Questions? (Optional):</h2>
+<textarea name="instructions" rows="4" placeholder="Any specific questions?"></textarea>
+</div>
+
+<button type="submit" id="submitFormBtn">Submit Order</button>
+</form>
+
+<div id="confirmationScreen">
+<h2>Please Confirm Your Order</h2>
+<div id="orderSummaryContainer">
+</div>
+<div class="button-group">
+<button type="button" id="editOrderBtn">Edit Order</button>
+<button type="button" id="confirmSubmitBtn">Confirm & Submit</button>
+</div>
+</div>
+
+<div id="finalConfirmationMessage">
+<h2>Thank you for your catering submission!</h2>
+<p>We have received your details and topping choices.</p>
+<p>One of our representatives will reach out to you!</p>
+</div>
+</div>
+
+<script>
+const MAX_TOPPINGS = 5;
+const MAX_DRIZZLES = 5;
+
+// Elements for confirmation screen
+const pancakeForm = document.getElementById('pancakeForm');
+const confirmationScreen = document.getElementById('confirmationScreen');
+// Get the container for the summary box
+const orderSummaryContainer = document.getElementById('orderSummaryContainer');
+const finalConfirmationMessage = document.getElementById('finalConfirmationMessage');
+const editOrderBtn = document.getElementById('editOrderBtn');
+const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
+const submitFormBtn = document.getElementById('submitFormBtn');
+
+
+function enforceCheckboxLimit(checkboxes, limit) {
+let checkedCount = 0;
+checkboxes.forEach(checkbox => {
+if (checkbox.checked) {
+checkedCount++;
+}
+});
+
+checkboxes.forEach(checkbox => {
+const label = checkbox.closest('.checkbox-label');
+if (checkedCount >= limit && !checkbox.checked) {
+checkbox.disabled = true;
+label.classList.add('disabled-checkbox-label');
+} else {
+checkbox.disabled = false;
+label.classList.remove('disabled-checkbox-label');
+}
+});
+}
+
+const allToppingCheckboxes = document.querySelectorAll('input[name="toppings"]');
+const allDrizzleCheckboxes = document.querySelectorAll('input[name="drizzle"]');
+
+allToppingCheckboxes.forEach(checkbox => {
+checkbox.addEventListener('change', () => {
+enforceCheckboxLimit(allToppingCheckboxes, MAX_TOPPINGS);
+});
+});
+
+allDrizzleCheckboxes.forEach(checkbox => {
+checkbox.addEventListener('change', () => {
+enforceCheckboxLimit(allDrizzleCheckboxes, MAX_DRIZZLES);
+});
+});
+
+const eventSizeInput = document.getElementById('eventSize');
+const eventSizeError = document.getElementById('eventSizeError');
+
+// Function to validate and filter input for eventSize
+eventSizeInput.addEventListener('input', function() {
+    // Remove any non-numeric characters (except for the minus sign at the beginning, though min="25" handles negative)
+    this.value = this.value.replace(/[^0-9]/g, '');
+    validateEventSizeLive();
+});
+
+// Also add a 'keydown' listener to prevent characters from even appearing initially
+eventSizeInput.addEventListener('keydown', function(event) {
+    // Allow navigation keys (arrows, tab, backspace, delete) and digits
+    if (
+        event.key === 'Backspace' ||
+        event.key === 'Delete' ||
+        event.key === 'Tab' ||
+        event.key === 'ArrowLeft' ||
+        event.key === 'ArrowRight' ||
+        event.key === 'Home' ||
+        event.key === 'End'
+    ) {
+        return; // Allow these keys
+    }
+
+    // Check if the pressed key is a digit
+    if (!/\d/.test(event.key)) {
+        event.preventDefault(); // Prevent the character from being typed
+    }
+});
+
+
+function validateEventSizeLive() {
+const value = eventSizeInput.value.trim();
+const parsedValue = parseInt(value);
+if (value === '' || isNaN(parsedValue) || !Number.isInteger(parsedValue) || parsedValue < 25) {
+eventSizeError.style.display = 'block';
+} else {
+eventSizeError.style.display = 'none';
+}
+}
+
+eventSizeInput.addEventListener('blur', validateEventSizeLive); // Keep blur for final validation on field exit
+
+
+// --- PHONE NUMBER INPUT RESTRICTION ---
+const phoneInput = document.getElementById('phone');
+
+// Filter input to only allow digits
+phoneInput.addEventListener('input', function() {
+    this.value = this.value.replace(/[^0-9]/g, '');
+    // You might also want to re-run the phone validation live here if desired
+    // validateField('phone', 'phoneError', value => phonePattern.test(value));
+});
+
+// Prevent non-digit characters from appearing on keydown
+phoneInput.addEventListener('keydown', function(event) {
+    // Allow navigation keys (arrows, tab, backspace, delete) and digits
+    if (
+        event.key === 'Backspace' ||
+        event.key === 'Delete' ||
+        event.key === 'Tab' ||
+        event.key === 'ArrowLeft' ||
+        event.key === 'ArrowRight' ||
+        event.key === 'Home' ||
+        event.key === 'End'
+    ) {
+        return; // Allow these keys
+    }
+
+    // Check if the pressed key is a digit
+    if (!/\d/.test(event.key)) {
+        event.preventDefault(); // Prevent the character from being typed
+    }
+});
+// --- END PHONE NUMBER INPUT RESTRICTION ---
+
+
+document.addEventListener('DOMContentLoaded', () => {
+enforceCheckboxLimit(allToppingCheckboxes, MAX_TOPPINGS);
+enforceCheckboxLimit(allDrizzleCheckboxes, MAX_DRIZZLES);
+
+const today = new Date();
+const year = today.getFullYear();
+const month = (today.getMonth() + 1).toString().padStart(2, '0');
+const day = today.getDate().toString().padStart(2, '0');
+document.getElementById('eventDate').min = `${year}-${month}-${day}`;
+
+validateEventSizeLive(); // Run initial validation on load
+});
+
+
+// --- ORIGINAL FORM SUBMISSION (TRIGGERING CONFIRMATION) ---
+pancakeForm.addEventListener('submit', function(event) {
+event.preventDefault(); // Prevent default form submission initially
+
+let isValid = true;
+
+function validateField(elementId, errorId, validationFn) {
+const element = document.getElementById(elementId);
+const errorElement = document.getElementById(errorId);
+if (!validationFn(element.value.trim())) {
+errorElement.style.display = 'block';
+isValid = false;
+} else {
+errorElement.style.display = 'none';
+}
+}
+
+// Perform all validations
+validateField('firstName', 'firstNameError', value => value !== '');
+validateField('lastName', 'lastNameError', value => value !== '');
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+validateField('email', 'emailError', value => emailPattern.test(value));
+const phonePattern = /^\d{10}$/; // This pattern already expects 10 digits
+validateField('phone', 'phoneError', value => phonePattern.test(value));
+validateField('eventSize', 'eventSizeError', value => {
+const parsedValue = parseInt(value);
+return value !== '' && !isNaN(parsedValue) && Number.isInteger(parsedValue) && parsedValue >= 25;
+});
+validateField('eventDate', 'eventDateError', value => value !== '');
+
+if (!isValid) {
+// If validation fails, stay on the form
+return;
+}
+
+// If validation passes, show the confirmation screen
+showConfirmationScreen();
+});
+
+
+// --- CONFIRMATION SCREEN FUNCTIONS ---
+function showConfirmationScreen() {
+// Collect all form data for summary
+const formData = new FormData(pancakeForm);
+const data = {};
+for (let [key, value] of formData.entries()) {
+if (key === 'toppings' || key === 'drizzle' || key === 'fruit' || key === 'coldBrew') {
+// Collect multiple selections for checkboxes
+if (!data[key]) data[key] = [];
+data[key].push(value);
+} else {
+data[key] = value;
+}
+}
+
+// Build order summary HTML
+let summaryHTML = '<h3>Review Your Information:</h3><ul>';
+summaryHTML += `<li><strong>Name:</strong> ${data.firstName || ''} ${data.lastName || ''}</li>`;
+summaryHTML += `<li><strong>Email:</strong> ${data.email || ''}</li>`;
+summaryHTML += `<li><strong>Phone:</strong> ${data.phone || ''}</li>`;
+summaryHTML += `<li><strong>Newsletter Opt-in:</strong> ${data.newsletterOptIn ? 'Yes' : 'No'}</li>`;
+summaryHTML += `<li><strong>Event Size:</strong> ${data.eventSize || ''} people</li>`;
+summaryHTML += `<li><strong>Event Date:</strong> ${data.eventDate || ''}</li>`;
+summaryHTML += `<li><strong>Toppings:</strong> ${data.toppings ? data.toppings.join(', ') : 'None selected'}</li>`;
+summaryHTML += `<li><strong>Drizzle:</strong> ${data.drizzle ? data.drizzle.join(', ') : 'None selected'}</li>`;
+summaryHTML += `<li><strong>Fruit Add-ons:</strong> ${data.fruit ? data.fruit.join(', ') : 'None selected'}</li>`;
+summaryHTML += `<li><strong>Cold Brew Add-ons:</strong> ${data.coldBrew ? data.coldBrew.join(', ') : 'None selected'}</li>`;
+summaryHTML += `<li><strong>Questions:</strong> ${data.instructions || 'None'}</li>`;
+summaryHTML += '</ul>';
+
+// Create the inner details box and inject HTML into it
+const detailsBox = document.createElement('div');
+detailsBox.className = 'summary-details-box';
+detailsBox.innerHTML = summaryHTML;
+
+// Clear previous content and append the new details box
+orderSummaryContainer.innerHTML = '';
+orderSummaryContainer.appendChild(detailsBox);
+
+pancakeForm.style.display = 'none'; // Hide the form
+confirmationScreen.style.display = 'flex'; // Show the confirmation screen
+}
+
+// --- EDIT ORDER BUTTON ---
+editOrderBtn.addEventListener('click', () => {
+confirmationScreen.style.display = 'none'; // Hide confirmation
+pancakeForm.style.display = 'block'; // Show the form again
+});
+
+// --- CONFIRM & SUBMIT BUTTON ---
+confirmSubmitBtn.addEventListener('click', () => {
+// In a real application, this is where you'd send data to a server
+// For this example, we'll just log and show final message
+
+// Simulate sending data (e.g., via fetch API to a backend endpoint)
+const formData = new FormData(pancakeForm);
+console.log("--- Final Submission Data (ready to send to server) ---");
+for (let [key, value] of formData.entries()) {
+console.log(`${key}: ${value}`);
+}
+// You can replace the console.log with a fetch() call here:
+/*
+fetch('YOUR_SERVER_ENDPOINT', {
+method: 'POST',
+body: formData
+})
+.then(response => response.json())
+.then(data => {
+console.log('Success:', data);
+confirmationScreen.style.display = 'none';
+finalConfirmationMessage.style.display = 'block';
+})
+.catch((error) => {
+console.error('Error:', error);
+// Handle error (e.g., show an error message to the user)
+alert("There was an error submitting your order. Please try again.");
+confirmationScreen.style.display = 'none';
+pancakeForm.style.display = 'block'; // Or a dedicated error page
+});
+*/
+
+// For now, just show the final confirmation
+confirmationScreen.style.display = 'none';
+finalConfirmationMessage.style.display = 'flex'; /* Use flex for vertical centering */
+});
+
+</script>
+</body>
+</html>
