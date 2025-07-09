@@ -1,441 +1,1346 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Mini Pancake Hut - Fluffy Delights</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Pacifico&display=swap" rel="stylesheet">
-    
-    <script src="https://www.google.com/recaptcha/api.js?render=6LcVYGkrAAAAAPYEL_TM5yH2ZQjrABWCrwvvL4s4"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Mini Pancake Hut - Fluffy Delights</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Pacifico&display=swap" rel="stylesheet">
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'brand-yellow': '#FDF5C1',
-                        'brand-pink': '#F565A3',
-                        'brand-brown': '#8B5A2B',
-                        'brand-tan': '#DEA654',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Pacifico', 'cursive'],
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    },
-                    animation: {
-                        'fade-in': 'fadeIn 0.8s ease-out forwards',
-                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
-                    }
-                }
-            }
-        }
-    </script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcVYGkrAAAAAPYEL_TM5yH2ZQjrABWCrwvvL4s4"></script>
+
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+'brand-yellow': '#FDF5C1',
+'brand-pink': '#F565A3',
+'brand-brown': '#8B5A2B',
+'brand-tan': '#DEA654',
+},
+fontFamily: {
+sans: ['Inter', 'sans-serif'],
+display: ['Pacifico', 'cursive'],
+},
+keyframes: {
+fadeIn: {
+'0%': { opacity: '0' },
+'100%': { opacity: '1' },
+},
+fadeInUp: {
+'0%': { opacity: '0', transform: 'translateY(20px)' },
+'100%': { opacity: '1', transform: 'translateY(0)' },
+}
+},
+animation: {
+'fade-in': 'fadeIn 0.8s ease-out forwards',
+'fade-in-up': 'fadeInUp 1s ease-out forwards',
+}
+}
+}
+}
+</script>
+
+<style>
+/* --- Modal Styles (NEW & Generic) --- */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed for really small screens */
+    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding: 20px; /* Padding around the modal content */
+    box-sizing: border-box; /* Include padding in dimensions */
+    visibility: hidden; /* Start hidden for animation */
+    opacity: 0; /* Start transparent for fade-in */
+    transition: visibility 0s, opacity 0.3s ease-in-out;
+}
+
+.modal-overlay.open {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto; /* Centering for older browsers */
+    border: none; /* Removed border to allow inner form to have it */
+    padding: 0; /* No padding here, inner .container has it */
+    width: 90%; /* Max width relative to overlay */
+    max-width: 600px; /* Specific max width */
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-radius: 0; /* Keep consistent with form styling */
+
+    box-sizing: border-box;
+}
+
+/* Ensure body doesn't scroll when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* --- ORIGINAL CATERING FORM STYLES (Copied and adjusted for unique IDs) --- */
+/* Note: All IDs within the catering form's HTML now start with 'catering-' */
+body {
+    font-family: -apple-system, BlinkMacMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    margin: 0;
+    color: #1a1a1a; /* Default body text color (black) */
+}
+
+.catering-form-container { /* Renamed from .container to avoid conflict */
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 0;
+    border: 2px solid #000000;
+    box-shadow: none;
+    width: 100%; /* Changed to 100% to fill modal-content */
+    max-width: 600px; /* Keep max-width for internal sizing if needed */
+    box-sizing: border-box;
+    position: relative;
+    margin: auto; /* Allows it to be centered inside modal-content if modal-content is wider */
+}
+
+.catering-form-container h1 { /* Targeted for specific container */
+    text-align: left;
+    background-color: #f24b7b;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    display: block;
+}
+
+.catering-form-container h1 .black-text { /* Targeted for specific container */
+    color: #1a1a1a;
+    background-image: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+}
+
+.catering-form-container p { /* Targeted for specific container */
+    color: #1a1a1a;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-size: 0.95em;
+}
+
+.catering-form-container .accent-paragraph { /* Targeted for specific container */
+    color: #f24b7b;
+}
+
+/* --- SECTION STYLES --- */
+.catering-form-container .section { /* Targeted for specific container */
+    margin-bottom: 30px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #eee;
+}
+.catering-form-container .section:last-child { /* Targeted for specific container */
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 40px;
+}
+
+.catering-form-container h2 { /* Targeted for specific container */
+    color: #1a1a1a;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.catering-form-container h3 { /* Targeted for specific container */
+    color: #1a1a1a;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.catering-form-container .field-group { /* Targeted for specific container */
+    margin-bottom: 25px;
+}
+.catering-form-container .field-group:last-of-type { /* Targeted for specific container */
+    margin-bottom: 0;
+}
+
+.catering-form-container label { /* Targeted for specific container */
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #1a1a1a;
+    font-size: 1em;
+}
+
+.catering-form-container .required-asterisk { /* Targeted for specific container */
+    color: #e53935;
+    font-weight: bold;
+    margin-left: 3px;
+}
+
+/* --- INPUT FIELD STYLES --- */
+.catering-form-container input[type="text"],
+.catering-form-container input[type="email"],
+.catering-form-container input[type="tel"],
+.catering-form-container input[type="number"],
+.catering-form-container input[type="date"],
+.catering-form-container textarea,
+.catering-form-container select { /* Targeted for specific container */
+    width: calc(100% - 24px);
+    padding: 12px;
+    margin-top: 0;
+    border: 2px solid #000000;
+    border-radius: 0;
+    font-size: 1em;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    transition: border-color 0.1s ease, box-shadow 0.1s ease;
+}
+
+.catering-form-container input[type="text"]:focus,
+.catering-form-container input[type="email"]:focus,
+.catering-form-container input[type="tel"]:focus,
+.catering-form-container input[type="number"]:focus,
+.catering-form-container input[type="date"]:focus,
+.catering-form-container textarea:focus,
+.catering-form-container select:focus { /* Targeted for specific container */
+    outline: none;
+    border-color: #000000;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.catering-form-container input::placeholder,
+.catering-form-container textarea::placeholder { /* Targeted for specific container */
+    color: #888;
+    opacity: 1;
+}
+
+.catering-form-container input[type="number"] { /* Targeted for specific container */
+    -moz-appearance: textfield;
+}
+.catering-form-container input[type="number"]::-webkit-outer-spin-button,
+.catering-form-container input[type="number"]::-webkit-inner-spin-button { /* Targeted for specific container */
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* --- FIELDSET & LEGEND STYLES --- */
+.catering-form-container fieldset { /* Targeted for specific container */
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+.catering-form-container legend { /* Targeted for specific container */
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 15px;
+    padding: 0;
+}
+
+/* --- CHECKBOX STYLES --- */
+.catering-form-container .checkbox-group { /* Targeted for specific container */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.catering-form-container .checkbox-label { /* Targeted for specific container */
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    color: #1a1a1a;
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 5px 0;
+    transition: background-color 0.2s ease;
+}
+.catering-form-container .checkbox-label:hover:not(.disabled-checkbox-label) { /* Targeted for specific container */
+    background-color: #f0f0f0;
+    border-radius: 0;
+}
+
+.catering-form-container .opt-in-checkbox { /* Targeted for specific container */
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.catering-form-container .checkbox-label input[type="checkbox"] { /* Targeted for specific container */
+    width: auto;
+    height: auto;
+    margin-right: 10px;
+    border: 1px solid #000;
+    border-radius: 0;
+    transform: scale(1.0);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    position: relative;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+.catering-form-container .checkbox-label input[type="checkbox"]:checked { /* Targeted for specific container */
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+}
+.catering-form-container .checkbox-label input[type="checkbox"]:checked::after { /* Targeted for specific container */
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.catering-form-container .checkbox-label input[type="checkbox"]:focus { /* Targeted for specific container */
+    outline: 2px solid rgba(0, 0, 0, 0.3);
+    outline-offset: 2px;
+}
+
+.catering-form-container .disabled-checkbox-label { /* Targeted for specific container */
+    color: #aaa;
+    cursor: not-allowed;
+}
+.catering-form-container .disabled-checkbox-label input[type="checkbox"] { /* Targeted for specific container */
+    opacity: 0.4 !important;
+    pointer-events: none !important;
+    background-color: #e0e0e0 !important;
+    border-color: #c0c0c0 !important;
+}
+.catering-form-container .disabled-checkbox-label input[type="checkbox"]:checked::after { /* Targeted for specific container */
+    border-color: #c0c0c0 !important;
+}
+
+/* --- ERROR MESSAGE STYLES --- */
+.catering-form-container .error-message { /* Targeted for specific container */
+    color: #e53935;
+    font-size: 0.9em;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+/* --- BUTTON STYLES --- */
+.catering-form-container button { /* Targeted for specific container */
+    background-color: #f24b7b;
+    color: white;
+    padding: 15px 25px;
+    border: 2px solid #f24b7b;
+    border-radius: 0;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    width: 100%;
+    margin-top: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.catering-form-container button:hover { /* Targeted for specific container */
+    background-color: #d13a69;
+    color: #ffffff;
+    border-color: #d13a69;
+}
+
+/* --- CONFIRMATION SCREEN STYLES --- */
+#catering-confirmationScreen { /* Targeted for specific ID */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    background-color: #ffffff;
+    padding: 20px 40px 40px 40px;
+    box-sizing: border-box;
+    border-radius: 0;
+    border: 2px solid #000000;
+    box-shadow: none;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 15px;
+}
+#catering-confirmationScreen h2 { /* Targeted for specific ID */
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 0;
+    font-weight: 700;
+}
+
+#catering-orderSummaryContainer { /* Targeted for specific ID */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.catering-form-container .summary-details-box { /* Targeted for specific container */
+    border: 2px solid #000000;
+    padding: 20px;
+    background-color: #ffffff;
+    font-size: 0.95em;
+    line-height: 1.5;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 450px;
+}
+.catering-form-container .summary-details-box h3 { /* Targeted for specific container */
+    font-size: 1.1em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+.catering-form-container .summary-details-box ul { /* Targeted for specific container */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.catering-form-container .summary-details-box ul li { /* Targeted for specific container */
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+.catering-form-container .summary-details-box ul li strong { /* Targeted for specific container */
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-right: 5px;
+}
+
+#catering-confirmationScreen .button-group { /* Targeted for specific ID */
+    display: flex;
+    gap: 20px;
+    margin-top: 0;
+    padding-top: 0;
+    justify-content: center;
+}
+#catering-confirmationScreen .button-group button { /* Targeted for specific ID */
+    width: 50%;
+    margin-top: 0;
+    font-size: 1em;
+}
+#catering-confirmSubmitBtn { /* Targeted for specific ID */
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+}
+#catering-confirmSubmitBtn:hover { /* Targeted for specific ID */
+    background-color: #333;
+    border-color: #333;
+}
+#catering-editOrderBtn { /* Targeted for specific ID */
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border-color: #1a1a1a;
+}
+#catering-editOrderBtn:hover { /* Targeted for specific ID */
+    background-color: #f0f0f0;
+    color: #1a1a1a;
+    border-color: #1a1a1a;
+}
 
 
+/* --- FINAL THANK YOU SCREEN STYLES --- */
+#catering-finalConfirmationMessage { /* Targeted for specific ID */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    padding: 40px;
+    box-sizing: border-box;
+    border-radius: 0;
+    border: 2px solid #000000;
+    box-shadow: none;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#catering-finalConfirmationMessage h2 { /* Targeted for specific ID */
+    font-size: 2em;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+}
+#catering-finalConfirmationMessage p { /* Targeted for specific ID */
+    font-size: 1.1em;
+    line-height: 1.5;
+    color: #1a1a1a;
+    max-width: 80%;
+    margin: 0 auto 15px auto;
+}
+</style>
 
 
 </head>
 <body class="bg-brand-white text-brand-brown antialiased">
 
-    <header id="header" class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50 opacity-0 animate-fade-in">
-        <nav class="container mx-auto px-6 py-3">
-            <div class="flex items-center justify-between">
-                <div class="flex-shrink-0">
-                    <a href="#home" class="flex items-center">
-                        <img src="pkmini2.jpg" alt="The Mini Pancake Hut Logo" class="h-20 w-20 rounded-full object-cover shadow-md">
-                    </a>
-                </div>
+<header id="header" class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50 opacity-0 animate-fade-in">
+<nav class="container mx-auto px-6 py-3">
+<div class="flex items-center justify-between">
+<div class="flex-shrink-0">
+<a href="#home" class="flex items-center">
+<img src="pkmini2.jpg" alt="The Mini Pancake Hut Logo" class="h-20 w-20 rounded-full object-cover shadow-md">
+</a>
+</div>
 
-                <div class="hidden md:flex flex-grow justify-center items-center space-x-12">
-                    <a href="#home" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Home</a>
-                    <a href="#about" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">About Us</a>
-                    <a href="#menu" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Menu</a>
-                    <a href="#service-details" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Our Service</a>
-                    <a href="#catering" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Catering</a>
-                    <a href="#contact" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Contact</a>
-                </div>
-                
-                <div class="flex-shrink-0">
-                    <button id="mobile-menu-button" class="md:hidden">
-                        <svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                    </button>
-                    <div class="hidden md:block w-20"></div>
-                </div>
-            </div>
-            <div id="mobile-menu" class="hidden md:hidden mt-4">
-                <a href="#home" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Home</a>
-                <a href="#about" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">About Us</a>
-                <a href="#menu" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Menu</a>
-                <a href="#service-details" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Our Service</a>
-                <a href="#catering" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Catering</a>
-                <a href="#contact" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Contact</a>
-            </div>
-        </nav>
-    </header>
+<div class="hidden md:flex flex-grow justify-center items-center space-x-12">
+<a href="#home" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Home</a>
+<a href="#about" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">About Us</a>
+<a href="#menu" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Menu</a>
+<a href="#service-details" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Our Service</a>
+<a href="#catering" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Catering</a>
+<a href="#contact" class="text-brand-brown hover:text-brand-pink transition duration-300 font-semibold">Contact</a>
+<a href="#" id="navInquireNowBtn" class="inline-block bg-brand-pink text-white font-bold py-2 px-3 rounded-full text-base hover:bg-white hover:text-brand-pink transition duration-300 shadow-md">Inquire Now</a>
+</div>
 
-    <main>
-        <section id="home" class="relative h-screen flex items-center justify-center text-white text-center overflow-hidden">
-            <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-0 animate-fade-in">
-                <source src="minipancakehutvid.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="absolute top-0 left-0 w-full h-full bg-black/50 z-10 opacity-0 animate-fade-in"></div>
-            <div class="relative z-20 p-8">
-                <h1 class="text-5xl md:text-7xl font-bold font-display text-shadow-lg opacity-0 animate-fade-in-up [animation-delay:0.2s]">The Mini Pancake Hut</h1>
-                <p class="text-2xl md:text-3xl mt-4 font-sans font-light opacity-0 animate-fade-in-up [animation-delay:0.7s]">Fluffy Delights in Every Bite</p>
-                <a href="#menu" class="mt-8 inline-block bg-brand-pink/65 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-brand-pink transition duration-300 transform hover:scale-105 shadow-lg opacity-0 animate-fade-in-up [animation-delay:1.2s]">View Our Menu</a>
-            </div>
-        </section>
+<div class="flex-shrink-0">
+<button id="mobile-menu-button" class="md:hidden">
+<svg class="w-6 h-6 text-brand-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+</button>
+<div class="hidden md:block w-20"></div>
+</div>
+</div>
+<div id="mobile-menu" class="hidden md:hidden mt-4">
+<a href="#home" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Home</a>
+<a href="#about" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">About Us</a>
+<a href="#menu" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Menu</a>
+<a href="#service-details" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Our Service</a>
+<a href="#catering" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Catering</a>
+<a href="#contact" class="block py-2 px-4 text-sm text-brand-brown hover:bg-brand-tan/20 rounded">Contact</a>
+<a href="#" id="mobileNavInquireNowBtn" class="block text-center mt-3 bg-brand-pink text-white font-bold py-2 px-5 rounded-full text-base hover:bg-brand-brown transition duration-300 shadow-md">Inquire Now</a>
+</div>
+</nav>
+</header>
 
-        <section id="about" class="py-20 scroll-mt-24">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">About The Hut</h2>
-                <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-                    Mini Pancake Hut is owned
+<main>
+<section id="home" class="relative h-screen flex items-center justify-center text-white text-center overflow-hidden">
+<video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-0 animate-fade-in">
+<source src="minipancakehutvid.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+<div class="absolute top-0 left-0 w-full h-full bg-black/50 z-10 opacity-0 animate-fade-in"></div>
+<div class="relative z-20 p-8">
+<h1 class="text-5xl md:text-7xl font-bold font-display text-shadow-lg opacity-0 animate-fade-in-up [animation-delay:0.2s]">The Mini Pancake Hut</h1>
+<p class="text-2xl md:text-3xl mt-4 font-sans font-light opacity-0 animate-fade-in-up [animation-delay:0.7s]">Fluffy Delights in Every Bite</p>
+<a href="#menu" class="mt-8 inline-block bg-brand-pink/65 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-brand-pink transition duration-300 transform hover:scale-105 shadow-lg opacity-0 animate-fade-in-up [animation-delay:1.2s]">View Our Menu</a>
+</div>
+</section>
+
+<section id="about" class="py-20 scroll-mt-24">
+<div class="container mx-auto px-6">
+<h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">About The Hut</h2>
+<p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+Mini Pancake Hut is owned
 by husband and wife duo. Our small business founded in Humble, Texas in 2022 by Irene Garibay and her husband Ben. It focuses specifically in catering delicious fluffy delights such as our premiere mini pancakes and refreshing iced coffee. We pride ourselves on our exceptional customer service and ensure grade A quality all of the time. <br> <br>
 Our staff are trained professionals and every plate served is nicely decorated to the customers request. We ensure a 100% satisfaction guarantee with our services, our detailed set up, and our delicious mini pancakes! Every event we have done is with love, joy and an open heart. Pancake making is not only our job but, it is our passion.<br> <br>
 Seeing our customers and their guest enjoying our mini pancakes and delicious sweets satisfies our hearts with every delicious bite!
-                </p>
+</p>
 
-                <h3 class="text-3xl font-bold text-center text-brand-brown mb-8 font-display">Moments from Our Events</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300" src="minis/Pk6.jpeg" alt="Pancake event photo">
+<h3 class="text-3xl font-bold text-center text-brand-brown mb-8 font-display">Moments from Our Events</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div>
+<img class="h-auto max-w-full rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300" src="minis/Pk6.jpeg" alt="Pancake event photo">
+</div>
+<div>
+<img class="h-auto max-w-full rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300" src="minis/Pk7.jpeg" alt="Pancake event photo">
+</div>
+<div>
+<img class="h-auto max-w-full rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300" src="minis/Pk12.jpeg" alt="Pancake event photo">
+</div>
+<div>
+<img class="h-auto max-w-full rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300" src="minis/Pk13.jpeg" alt="Pancake event photo">
+</div>
+</div>
+</div>
+</section>
+
+<section id="menu" class="py-20 bg-white scroll-mt-24">
+<div class="container mx-auto px-6">
+<h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">Toppings & Drizzles</h2>
+<p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Customize your mini pancakes with our delicious selection of toppings and drizzles. Your catering package includes your choice of several options to delight your guests!</p>
+
+<div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
+
+<div class="bg-brand-yellow/30 p-8 rounded-lg shadow-lg">
+<h3 class="text-3xl font-bold text-center text-brand-pink mb-6 font-display">Toppings</h3>
+<ul class="space-y-3 text-lg text-gray-700 text-center">
+<li>Pecans</li>
+<li>Oreo Crumbs</li>
+<li>Rainbow Sprinkles</li>
+<li>Fruity Pebbles</li>
+<li>M&M's</li>
+<li>Coconut Flakes</li>
+<li>Mini Trix</li>
+<li>Mini Chocolate Chips</li>
+<li>Mini Cinnamon Crunch</li>
+<li>Whipped Cream</li>
+<li>Churro Mix</li>
+<li>Almonds</li>
+<li>Mini Marshmallows</li>
+</ul>
+</div>
+
+<div class="bg-brand-yellow/30 p-8 rounded-lg shadow-lg">
+<h3 class="text-3xl font-bold text-center text-brand-pink mb-6 font-display">Drizzles</h3>
+<ul class="space-y-3 text-lg text-gray-700 text-center">
+<li>Maple Syrup</li>
+<li>Condensed Milk</li>
+<li>Nutella</li>
+<li>Chocolate Syrup</li>
+<li>Caramel</li>
+<li>Strawberry Syrup</li>
+<li>Dulce de Leche</li>
+<li>Strawberry Jam</li>
+</ul>
+</div>
+</div>
+
+<div class="mt-20">
+<h2 class="text-4xl font-bold text-center text-brand-brown mb-12 font-display">Add-Ons</h2>
+
+<div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
+<div class="bg-brand-yellow/30 p-8 rounded-lg shadow-lg text-center">
+<h3 class="text-3xl font-bold text-brand-pink mb-4 font-display">Fruit</h3>
+<p class="text-gray-600 mb-6">(Additional Charge)</p>
+<ul class="space-y-3 text-lg text-gray-700">
+<li>Strawberries</li>
+<li>Bananas</li>
+<li>Blueberries</li>
+</ul>
+</div>
+
+<div class="bg-brand-yellow/30 p-8 rounded-lg shadow-lg text-center flex flex-col justify-center">
+<h3 class="text-3xl font-bold text-brand-pink mb-4 font-display">Cold Brew Coffee</h3>
+<p class="text-lg text-gray-700">
+Our service includes refreshing cold brew and iced coffee for your guests.
+</p>
+<p class="text-md text-gray-600 mt-3">
+(No espresso bar means much quicker wait times!)
+</p>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="service-details" class="py-20 bg-brand-yellow/20 scroll-mt-24">
+<div class="container mx-auto px-6">
+<h2 class="text-4xl font-bold text-center text-brand-brown mb-10 font-display">Our Service</h2>
+<div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+<ul class="space-y-4 text-lg text-gray-700">
+<li class="flex items-start">
+<svg class="w-6 h-6 text-brand-pink mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+<span><strong>2.5 Hour Service:</strong> We provide a full two and a half hours of live pancake making.</span>
+</li>
+<li class="flex items-start">
+<svg class="w-6 h-6 text-brand-pink mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+<span><strong>Unlimited Pancakes:</strong> Your guests can enjoy as many fluffy delights as they wish within the service time.</span>
+</li>
+<li class="flex items-start">
+<svg class="w-6 h-6 text-brand-pink mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+<span><strong>Professional Staff:</strong> Includes 2-3 friendly staff members, depending on your guest count.</span>
+</li>
+<li class="flex items-start">
+<svg class="w-6 h-6 text-brand-pink mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+<span><strong>Custom Menu:</strong> You can choose 5 toppings and 5 drizzles from our menu for your event.</span>
+</li>
+</ul>
+<p class="text-center text-gray-500 mt-8 text-sm italic">
+*Any additional toppings or add-ons (like fruit) will be an extra charge.
+</p>
+</div>
+</div>
+</section>
+
+
+<section id="catering" class="py-20 bg-brand-yellow scroll-mt-24">
+<div class="container mx-auto px-6">
+<div class="text-center">
+<h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">Catering</h2>
+<p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Bring the fluffy delights of The Mini Pancake Hut to your next event! Perfect for parties, corporate events, and weddings.</p>
+</div>
+<div class="flex flex-col md:flex-row items-center gap-10 bg-white p-8 rounded-xl shadow-lg">
+<div class="md:w-1/2">
+<img src="minis/minibcard.png" alt="Catering Setup" class="rounded-lg shadow-md w-full">
+</div>
+<div class="md:w-1/2">
+<h3 class="text-3xl font-bold text-brand-brown mb-4">Let's Get this Party Started!</h3>
+<p class="text-gray-700 mb-6">Our live mini pancake station is a guaranteed crowd-pleaser. We provide everything you need for a delicious and memorable experience, including:</p>
+
+<ul class="space-y-3 text-gray-700 mb-6 text-left">
+<li class="flex items-center">
+<svg class="w-5 h-5 text-brand-pink mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+Generous servings of 10 mini pancakes.
+</li>
+<li class="flex items-center">
+<svg class="w-5 h-5 text-brand-pink mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+Toppings bar with your 5 chosen items.
+</li>
+<li class="flex items-center">
+<svg class="w-5 h-5 text-brand-pink mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+Personalized forks for your event.
+</li>
+<li class="flex items-center">
+<svg class="w-5 h-5 text-brand-pink mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+All necessary cutlery & serving trays.
+</li>
+</ul>
+
+<a href="#contact" id="inquireNowBtn" class="inline-block bg-brand-pink text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-brand-pink transition duration-300 transform hover:scale-105 shadow-lg">Inquire Now</a>
+</div>
+</div>
+</div>
+</section>
+
+<section id="contact" class="py-20 bg-white scroll-mt-24">
+<div class="container mx-auto px-6">
+<h2 class="text-4xl font-bold text-center text-brand-brown mb-12 font-display">Contact Us</h2>
+<p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Call, live chat, or submit the form below!</p>
+<div class="flex flex-col lg:flex-row gap-10">
+<div class="lg:w-1/2 bg-brand-yellow/30 p-8 rounded-lg shadow-md min-h-[480px] flex flex-col justify-center">
+<div id="contact-form-container">
+<h3 class="text-2xl font-bold text-brand-brown mb-6">Send us a Message</h3>
+<form id="contactForm" action="https://n8n.joemur.com/webhook/da6cd7c2-d9f2-4371-9efd-e021bd060cc7" method="POST">
+<div class="flex flex-col md:flex-row md:space-x-4">
+<div class="mb-4 md:w-1/2">
+<label for="contact-firstName" class="block text-brand-brown font-semibold mb-2">First Name</label>
+<input type="text" id="contact-firstName" name="firstName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
+</div>
+<div class="mb-4 md:w-1/2">
+<label for="contact-lastName" class="block text-brand-brown font-semibold mb-2">Last Name</label>
+<input type="text" id="contact-lastName" name="lastName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
+</div>
+</div>
+<div class="mb-4">
+<label for="contact-phone" class="block text-brand-brown font-semibold mb-2">Phone Number</label>
+<input type="tel" id="contact-phone" name="phone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
+</div>
+<div class="mb-4">
+<label for="contact-email" class="block text-brand-brown font-semibold mb-2">Email</label>
+<input type="email" id="contact-email" name="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
+</div>
+<div class="mb-4">
+<label for="contact-message" class="block text-brand-brown font-semibold mb-2">Message</label>
+<textarea id="contact-message" name="message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink" required></textarea>
+</div>
+<input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+<button type="submit" class="w-full bg-brand-pink text-white font-bold py-3 px-6 rounded-full hover:bg-brand-brown transition duration-300 shadow-lg">Send Message</button>
+</form>
+</div>
+<div id="contact-thankYouMessage" class="hidden text-center">
+<svg class="mx-auto h-16 w-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+<h3 class="text-3xl font-bold text-brand-brown font-display mt-4 animate-fade-in-up">Thank You!</h3>
+<p class="text-gray-700 text-lg mt-2 animate-fade-in-up [animation-delay:0.3s]">Your message has been sent. We'll be in touch soon.</p>
+</div>
+</div>
+<div class="lg:w-1/2">
+<div class="bg-brand-yellow/30 p-8 rounded-lg shadow-md mb-8">
+<h3 class="text-2xl font-bold text-brand-brown mb-4">Our Hut</h3>
+<p class="text-gray-700 mb-2"><strong>Phone:</strong> 832-745-9803</p>
+<p class="text-gray-700 mb-2"><strong>Email:</strong> minipancakehut@gmail.com</p>
+</div>
+<div class="rounded-lg shadow-md overflow-hidden h-80">
+<iframe
+src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3463.784226177501!2d-95.3698022848981!3d29.75437598198944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640bf3d5c1b1c3b%3A0x6b8f3de4f9d8d672!2sDowntown%20Aquarium!5e0!3m2!1sen!2sus!4v1684343160123!5m2!1sen!2sus"
+width="100%"
+height="100%"
+style="border:0;"
+allowfullscreen=""
+loading="lazy"
+referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+<footer class="bg-brand-brown text-white py-8">
+<div class="container mx-auto px-6 text-center">
+<a href="#home" class="flex items-center justify-center mb-4">
+<img src="pkmini2.jpg" alt="The Mini Pancake Hut Logo" class="h-20 w-20 rounded-full object-cover shadow-md">
+</a>
+<div class="flex justify-center space-x-6 mb-4">
+<a href="#home" class="hover:text-brand-pink transition">Home</a>
+<a href="#about" class="hover:text-brand-pink transition">About Us</a>
+<a href="#menu" class="hover:text-brand-pink transition">Menu</a>
+<a href="#service-details" class="hover:text-brand-pink transition">Our Service</a>
+<a href="#catering" class="hover:text-brand-pink transition">Catering</a>
+<a href="#contact" class="hover:text-brand-pink transition">Contact</a>
+</div>
+<div class="flex justify-center space-x-6 mb-4">
+<a href="https://instagram.com/mini.pancakehut" target="_blank" rel="noopener noreferrer" class="text-white hover:text-brand-pink transition">
+<span class="sr-only">Instagram</span>
+<svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+<path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.258.058 2.13.24 2.887.546.774.307 1.44.73 2.067 1.356s.95 1.294 1.257 2.067c.306.757.488 1.63.546 2.887.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.058 1.258-.24 2.13-.546 2.887-.307.774-.73 1.44-1.356 2.067s-1.294.95-2.067 1.257c-.757.306-1.63.488-2.887.546-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.258-.058-2.13-.24-2.887-.546-.774-.307-1.44-.73-2.067-1.356s-.95-1.294-1.257-2.067c-.306-.757-.488-1.63-.546-2.887-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.058-1.258.24-2.13.546 2.887.307.774.73 1.44 1.356 2.067s1.294.95 2.067 1.257c.757.306 1.63.488 2.887.546 1.266.058 1.646.07 4.85.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.28.058-2.16.242-2.924.545-.78.31-1.448.74-2.09 1.383-.64.643-1.074 1.31-1.383 2.09-.303.765-.487 1.644-.545 2.924-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.058 1.28.242 2.16.545 2.924.31.78.74 1.448 1.383 2.09.643.64 1.31 1.074 2.09 1.383.765.303 1.644.487 2.924.545 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.28-.058 2.16-.242 2.924-.545.78-.31 1.448-.74 2.09-1.383.64-.643-1.074-1.31-1.383-2.09.303-.765-.487-1.644-.545-2.924.058-1.28.072-1.688-.072-4.947s-.014-3.667-.072-4.947c-.058-1.28-.242-2.16-.545-2.924-.31-.78-.74-1.448-1.383-2.09-.643-.64-1.31-1.074-2.09-1.383-.765-.303-1.644-.487-2.924-.545-1.28-.058-1.688-.072-4.947-.072z"></path><path d="M12 6.845c-2.836 0-5.155 2.318-5.155 5.155s2.318 5.155 5.155 5.155 5.155-2.318 5.155-5.155-2.318-5.155-5.155-5.155zm0 8.31c-1.745 0-3.155-1.41-3.155-3.155s1.41-3.155 3.155-3.155 3.155 1.41 3.155 3.155-1.41 3.155-3.155 3.155zm5.16-8.82c-.54 0-.98.44-.98.98s.44.98.98.98.98-.44.98-.98-.44-.98-.98z"></path>
+</svg>
+</a>
+<a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="text-white hover:text-brand-pink transition">
+<span class="sr-only">Facebook</span>
+<svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+<path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.891h-2.33V21.878A10.001 10.001 0 0022 12z" clip-rule="evenodd" />
+</svg>
+</a>
+</div>
+<p>© 2025 The Mini Pancake Hut. All Rights Reserved.</p>
+</div>
+</footer>
+
+<div id="cateringModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="catering-form-container">
+            <h1>Mini Pancake Hut <span class="black-text">Catering Form</span></h1>
+            <p>Please provide your details and customize your catering experience.</p>
+
+            <form id="catering-pancakeForm">
+                <div class="section">
+                    <h2>Your Contact Information:</h2>
+                    <div class="field-group">
+                        <label for="catering-firstName">First Name <span class="required-asterisk">*</span></label>
+                        <input type="text" id="catering-firstName" name="firstName" required placeholder="First Name">
+                        <div class="error-message" id="catering-firstNameError">First Name is required.</div>
                     </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300" src="minis/Pk7.jpeg" alt="Pancake event photo">
+
+                    <div class="field-group">
+                        <label for="catering-lastName">Last Name <span class="required-asterisk">*</span></label>
+                        <input type="text" id="catering-lastName" name="lastName" required placeholder="Last Name">
+                        <div class="error-message" id="catering-lastNameError">Last Name is required.</div>
                     </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300" src="minis/Pk12.jpeg" alt="Pancake event photo">
+
+                    <div class="field-group">
+                        <label for="catering-email">Email <span class="required-asterisk">*</span></label>
+                        <input type="email" id="catering-email" name="email" required placeholder="your.email@example.com">
+                        <div class="error-message" id="catering-emailError">Valid Email is required.</div>
+                        <label class="checkbox-label opt-in-checkbox">
+                            <input type="checkbox" name="newsletterOptIn" value="yes"> Sign up for news and updates
+                        </label>
                     </div>
-                    <div>
-                       <img class="h-auto max-w-full rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300" src="minis/Pk13.jpeg" alt="Pancake event photo">
+
+                    <div class="field-group">
+                        <label for="catering-phone">Phone Number <span class="required-asterisk">*</span></label>
+                        <input type="tel" id="catering-phone" name="phone" pattern="^\d{10}$" placeholder="1234567890" required>
+                        <div class="error-message" id="catering-phoneError">Phone Number (10 digits) is required.</div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section id="menu" class="py-20 bg-white scroll-mt-24">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">Toppings & Drizzles</h2>
-                <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Customize your mini pancakes with our delicious selection of toppings and drizzles. Your catering package includes your choice of several options to delight your guests!</p>
-                
-                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
-                    
-                    <div class="bg-brand-yellow/30 p-8 rounded-lg shadow-lg">
-                        <h3 class="text-3xl font-bold text-center text-brand-pink mb-6 font-display">Toppings</h3>
-                        <ul class="space-y-3 text-lg text-gray-700 text-center">
-                            <li>Pecans</li>
-                            <li>Oreo Crumbs</li>
-                            <li>Rainbow Sprinkles</li>
-                            <li>Fruity Pebbles</li>
-                            <li>M&M's</li>
-                            <li>Coconut Flakes</li>
-                            <li>Mini Trix</li>
-                            <li>Mini Chocolate Chips</li>
-                            <li>Mini Cinnamon Crunch</li>
-                            <li>Whipped Cream</li>
-                            <li>Churro Mix</li>
-                            <li>Almonds</li>
-                            <li>Mini Marshmallows</li>
-                        </ul>
+                <div class="section">
+                    <h2>Event Details:</h2>
+                    <div class="field-group">
+                        <label for="catering-eventSize">Size of Event (Minimum 25 people) <span class="required-asterisk">*</span></label>
+                        <input type="number" id="catering-eventSize" name="eventSize" min="25" required placeholder="e.g., 50">
+                        <div class="error-message" id="catering-eventSizeError">Minimum of 25 people required.</div>
                     </div>
 
-                    <div class="bg-brand-yellow/30 p-8 rounded-lg shadow-lg">
-                        <h3 class="text-3xl font-bold text-center text-brand-pink mb-6 font-display">Drizzles</h3>
-                        <ul class="space-y-3 text-lg text-gray-700 text-center">
-                            <li>Maple Syrup</li>
-                            <li>Condensed Milk</li>
-                            <li>Nutella</li>
-                            <li>Chocolate Syrup</li>
-                            <li>Caramel</li>
-                            <li>Strawberry Syrup</li>
-                            <li>Dulce de Leche</li>
-                            <li>Strawberry Jam</li>
-                        </ul>
+                    <div class="field-group">
+                        <label for="catering-eventDate">Date of Event <span class="required-asterisk">*</span></label>
+                        <input type="date" id="catering-eventDate" name="eventDate" required>
+                        <div class="error-message" id="catering-eventDateError">Event Date is required.</div>
                     </div>
                 </div>
 
-                <div class="mt-20">
-                    <h2 class="text-4xl font-bold text-center text-brand-brown mb-12 font-display">Add-Ons</h2>
-                    
-                    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
-                        <div class="bg-brand-yellow/30 p-8 rounded-lg shadow-lg text-center">
-                            <h3 class="text-3xl font-bold text-brand-pink mb-4 font-display">Fruit</h3>
-                            <p class="text-gray-600 mb-6">(Additional Charge)</p>
-                            <ul class="space-y-3 text-lg text-gray-700">
-                                <li>Strawberries</li>
-                                <li>Bananas</li>
-                                <li>Blueberries</li>
-                            </ul>
+                <div class="section">
+                    <fieldset>
+                        <legend>Choose Your Toppings:</legend>
+                        <p class="accent-paragraph">You can select up to **5 Toppings**.</p>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="Pecans"> Pecans</label>
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="Oreo Crumbs"> Oreo Crumbs</label>
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="Rainbow Sprinkles"> Rainbow Sprinkles</label>
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="Fruity Pebbles"> Fruity Pebbles</label>
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="M&M's"> M&M's</label>
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="Coconut Flakes"> Coconut Flakes</label>
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="Mini Trix"> Mini Trix</label>
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="Mini Chocolate Chips"> Mini Chocolate Chips</label>
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="Mini Cinnamon Crunch"> Mini Cinnamon Crunch</label>
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="Whipped Cream"> Whipped Cream</label>
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="Churro Mix"> Churro Mix</label>
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="Almonds"> Almonds</label>
+                            <label class="checkbox-label"><input type="checkbox" name="toppings" value="Mini Marshmallows"> Mini Marshmallows</label>
                         </div>
-                        
-                        <div class="bg-brand-yellow/30 p-8 rounded-lg shadow-lg text-center flex flex-col justify-center">
-                            <h3 class="text-3xl font-bold text-brand-pink mb-4 font-display">Cold Brew Coffee</h3>
-                            <p class="text-lg text-gray-700">
-                                Our service includes refreshing cold brew and iced coffee for your guests.
-                            </p>
-                            <p class="text-md text-gray-600 mt-3">
-                                (No espresso bar means much quicker wait times!)
-                            </p>
+                    </fieldset>
+                </div>
+
+                <div class="section">
+                    <fieldset>
+                        <legend>Select Your Drizzle:</legend>
+                        <p class="accent-paragraph">You can select up to **5 Drizzles**.</p>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label"><input type="checkbox" name="drizzle" value="Maple Syrup"> Maple Syrup</label>
+                            <label class="checkbox-label"><input type="checkbox" name="drizzle" value="Condensed Milk"> Condensed Milk</label>
+                            <label class="checkbox-label"><input type="checkbox" name="drizzle" value="Nutella"> Nutella</label>
+                            <label class="checkbox-label"><input type="checkbox" name="drizzle" value="Chocolate Syrup"> Chocolate Syrup</label>
+                            <label class="checkbox-label"><input type="checkbox" name="drizzle" value="Caramel"> Caramel</label>
+                            <label class="checkbox-label"><input type="checkbox" name="drizzle" value="Strawberry Syrup"> Strawberry Syrup</label>
+                            <label class="checkbox-label"><input type="checkbox" name="drizzle" value="Dulce de Leche"> Dulce de Leche</label>
+                            <label class="checkbox-label"><input type="checkbox" name="drizzle" value="Strawberry Jam"> Strawberry Jam</label>
                         </div>
-                    </div>
+                    </fieldset>
                 </div>
 
-            </div>
-        </section>
-
-        <section id="service-details" class="py-20 bg-brand-yellow/20 scroll-mt-24">
-             <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center text-brand-brown mb-10 font-display">Our Service</h2>
-                <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg">
-                     <ul class="space-y-4 text-lg text-gray-700">
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-brand-pink mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span><strong>2.5 Hour Service:</strong> We provide a full two and a half hours of live pancake making.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-brand-pink mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span><strong>Unlimited Pancakes:</strong> Your guests can enjoy as many fluffy delights as they wish within the service time.</span>
-                        </li>
-                         <li class="flex items-start">
-                            <svg class="w-6 h-6 text-brand-pink mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span><strong>Professional Staff:</strong> Includes 2-3 friendly staff members, depending on your guest count.</span>
-                        </li>
-                         <li class="flex items-start">
-                            <svg class="w-6 h-6 text-brand-pink mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span><strong>Custom Menu:</strong> You can choose 5 toppings and 5 drizzles from our menu for your event.</span>
-                        </li>
-                    </ul>
-                    <p class="text-center text-gray-500 mt-8 text-sm italic">
-                        *Any additional toppings or add-ons (like fruit) will be an extra charge.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-
-        <section id="catering" class="py-20 bg-brand-yellow scroll-mt-24">
-            <div class="container mx-auto px-6">
-                 <div class="text-center">
-                    <h2 class="text-4xl font-bold text-center text-brand-brown mb-2 font-display">Catering</h2>
-                    <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Bring the fluffy delights of The Mini Pancake Hut to your next event! Perfect for parties, corporate events, and weddings.</p>
-                </div>
-                <div class="flex flex-col md:flex-row items-center gap-10 bg-white p-8 rounded-xl shadow-lg">
-                    <div class="md:w-1/2">
-                         <img src="minis/minibcard.png" alt="Catering Setup" class="rounded-lg shadow-md w-full">
-                    </div>
-                    <div class="md:w-1/2">
-                        <h3 class="text-3xl font-bold text-brand-brown mb-4">Let's Get this Party Started!</h3>
-                        <p class="text-gray-700 mb-6">Our live mini pancake station is a guaranteed crowd-pleaser. We provide everything you need for a delicious and memorable experience, including:</p>
-                        
-                        <ul class="space-y-3 text-gray-700 mb-6 text-left">
-                            <li class="flex items-center">
-                                <svg class="w-5 h-5 text-brand-pink mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                Generous servings of 10 mini pancakes.
-                            </li>
-                            <li class="flex items-center">
-                                <svg class="w-5 h-5 text-brand-pink mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                Toppings bar with your 5 chosen items.
-                            </li>
-                            <li class="flex items-center">
-                                <svg class="w-5 h-5 text-brand-pink mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                Personalized forks for your event.
-                            </li>
-                             <li class="flex items-center">
-                                <svg class="w-5 h-5 text-brand-pink mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                All necessary cutlery & serving trays.
-                            </li>
-                        </ul>
-
-                        <a href="#contact" class="inline-block bg-brand-pink text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-brand-brown transition duration-300 transform hover:scale-105 shadow-lg">Inquire Now</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="py-20 bg-white scroll-mt-24">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center text-brand-brown mb-12 font-display">Contact Us</h2>
-                <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Call, live chat, or submit the form below!</p>
-                <div class="flex flex-col lg:flex-row gap-10">
-                    <div class="lg:w-1/2 bg-brand-yellow/30 p-8 rounded-lg shadow-md min-h-[480px] flex flex-col justify-center">
-                        <div id="form-container">
-                            <h3 class="text-2xl font-bold text-brand-brown mb-6">Send us a Message</h3>
-                            <form id="contactForm" action="https://n8n.joemur.com/webhook/da6cd7c2-d9f2-4371-9efd-e021bd060cc7" method="POST">
-                                <div class="flex flex-col md:flex-row md:space-x-4">
-                                    <div class="mb-4 md:w-1/2">
-                                        <label for="firstName" class="block text-brand-brown font-semibold mb-2">First Name</label>
-                                        <input type="text" id="firstName" name="firstName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
-                                    </div>
-                                    <div class="mb-4 md:w-1/2">
-                                        <label for="lastName" class="block text-brand-brown font-semibold mb-2">Last Name</label>
-                                        <input type="text" id="lastName" name="lastName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
-                                    </div>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="phone" class="block text-brand-brown font-semibold mb-2">Phone Number</label>
-                                    <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="email" class="block text-brand-brown font-semibold mb-2">Email</label>
-                                    <input type="email" id="email" name="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="message" class="block text-brand-brown font-semibold mb-2">Message</label>
-                                    <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink" required></textarea>
-                                </div>
-                                <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
-                                <button type="submit" class="w-full bg-brand-pink text-white font-bold py-3 px-6 rounded-full hover:bg-brand-brown transition duration-300 shadow-lg">Send Message</button>
-                            </form>
+                <div class="section">
+                    <fieldset>
+                        <legend>Add-Ons:</legend>
+                        <p class="accent-paragraph">Additional charge applies for fruit.</p>
+                        <h3>Fruit:</h3>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label"><input type="checkbox" name="fruit" value="Strawberries"> Strawberries</label>
+                            <label class="checkbox-label"><input type="checkbox" name="fruit" value="Bananas"> Bananas</label>
+                            <label class="checkbox-label"><input type="checkbox" name="fruit" value="Blueberries"> Blueberries</label>
                         </div>
-                        <div id="thankYouMessage" class="hidden text-center">
-                            <svg class="mx-auto h-16 w-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <h3 class="text-3xl font-bold text-brand-brown font-display mt-4 animate-fade-in-up">Thank You!</h3>
-                            <p class="text-gray-700 text-lg mt-2 animate-fade-in-up [animation-delay:0.3s]">Your message has been sent. We'll be in touch soon.</p>
+
+                        <h3>Cold Brew Coffee:</h3>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label"><input type="checkbox" name="coldBrew" value="Cold Brew Coffee"> Cold Brew Coffee</label>
+                            <label class="checkbox-label"><input type="checkbox" name="coldBrew" value="Iced Coffee"> Iced Coffee</label>
                         </div>
-                    </div>
-                    <div class="lg:w-1/2">
-                         <div class="bg-brand-yellow/30 p-8 rounded-lg shadow-md mb-8">
-                            <h3 class="text-2xl font-bold text-brand-brown mb-4">Our Hut</h3>
-                            <p class="text-gray-700 mb-2"><strong>Phone:</strong> 832-745-9803</p>
-                            <p class="text-gray-700 mb-2"><strong>Email:</strong> minipancakehut@gmail.com</p>
-                            </div>
-                         <div class="rounded-lg shadow-md overflow-hidden h-80">
-                            <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3463.784226177501!2d-95.3698022848981!3d29.75437598198944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640bf3d5c1b1c3b%3A0x6b8f3de4f9d8d672!2sDowntown%20Aquarium!5e0!3m2!1sen!2sus!4v1684343160123!5m2!1sen!2sus" 
-                                width="100%" 
-                                height="100%" 
-                                style="border:0;" 
-                                allowfullscreen="" 
-                                loading="lazy" 
-                                referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
-                         </div>
-                    </div>
+                    </fieldset>
+                </div>
+
+                <div class="section">
+                    <h2>Questions? (Optional):</h2>
+                    <textarea name="instructions" rows="4" placeholder="Any specific questions?"></textarea>
+                </div>
+
+                <button type="submit" id="catering-submitFormBtn">Submit Order</button>
+            </form>
+
+            <div id="catering-confirmationScreen">
+                <h2>Please Confirm Your Order</h2>
+                <div id="catering-orderSummaryContainer">
+                </div>
+                <div class="button-group">
+                    <button type="button" id="catering-editOrderBtn">Edit Order</button>
+                    <button type="button" id="catering-confirmSubmitBtn">Confirm & Submit</button>
                 </div>
             </div>
-        </section>
-    </main>
 
-    <footer class="bg-brand-brown text-white py-8">
-        <div class="container mx-auto px-6 text-center">
-             <a href="#home" class="flex items-center justify-center mb-4">
-                <img src="pkmini2.jpg" alt="The Mini Pancake Hut Logo" class="h-20 w-20 rounded-full object-cover shadow-md">
-            </a>
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="#home" class="hover:text-brand-pink transition">Home</a>
-                <a href="#about" class="hover:text-brand-pink transition">About Us</a>
-                <a href="#menu" class="hover:text-brand-pink transition">Menu</a>
-                <a href="#service-details" class="hover:text-brand-pink transition">Our Service</a>
-                <a href="#catering" class="hover:text-brand-pink transition">Catering</a>
-                <a href="#contact" class="hover:text-brand-pink transition">Contact</a>
+            <div id="catering-finalConfirmationMessage">
+                <h2>Thank you for your catering submission!</h2>
+                <p>We have received your details and topping choices.</p>
+                <p>One of our representatives will reach out to you!</p>
             </div>
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="https://instagram.com/mini.pancakehut" target="_blank" rel="noopener noreferrer" class="text-white hover:text-brand-pink transition">
-                    <span class="sr-only">Instagram</span>
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.258.058 2.13.24 2.887.546.774.307 1.44.73 2.067 1.356s.95 1.294 1.257 2.067c.306.757.488 1.63.546 2.887.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.058 1.258-.24 2.13-.546 2.887-.307.774-.73 1.44-1.356 2.067s-1.294.95-2.067 1.257c-.757.306-1.63.488-2.887.546-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.258-.058-2.13-.24-2.887-.546-.774-.307-1.44-.73-2.067-1.356s-.95-1.294-1.257-2.067c-.306-.757-.488-1.63-.546-2.887-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.058-1.258.24-2.13.546 2.887.307.774.73 1.44 1.356 2.067s1.294.95 2.067 1.257c.757.306 1.63.488 2.887.546 1.266.058 1.646.07 4.85.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.28.058-2.16.242-2.924.545-.78.31-1.448.74-2.09 1.383-.64.643-1.074 1.31-1.383 2.09-.303.765-.487 1.644-.545 2.924-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.058 1.28.242 2.16.545 2.924.31.78.74 1.448 1.383 2.09.643.64 1.31 1.074 2.09 1.383.765.303 1.644.487 2.924.545 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.28-.058 2.16-.242 2.924-.545.78-.31 1.448-.74 2.09-1.383.64-.643-1.074-1.31-1.383-2.09.303-.765-.487-1.644-.545-2.924.058-1.28.072-1.688-.072-4.947s-.014-3.667-.072-4.947c-.058-1.28-.242-2.16-.545-2.924-.31-.78-.74-1.448-1.383-2.09-.643-.64-1.31-1.074-2.09-1.383-.765-.303-1.644-.487-2.924-.545-1.28-.058-1.688-.072-4.947-.072z"></path><path d="M12 6.845c-2.836 0-5.155 2.318-5.155 5.155s2.318 5.155 5.155 5.155 5.155-2.318 5.155-5.155-2.318-5.155-5.155-5.155zm0 8.31c-1.745 0-3.155-1.41-3.155-3.155s1.41-3.155 3.155-3.155 3.155 1.41 3.155 3.155-1.41 3.155-3.155 3.155zm5.16-8.82c-.54 0-.98.44-.98.98s.44.98.98.98.98-.44.98-.98-.44-.98-.98-.98z"></path>
-                    </svg>
-                </a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="text-white hover:text-brand-pink transition">
-                    <span class="sr-only">Facebook</span>
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.891h-2.33V21.878A10.001 10.001 0 0022 12z" clip-rule="evenodd" />
-                    </svg>
-                </a>
-            </div>
-            <p>© 2025 The Mini Pancake Hut. All Rights Reserved.</p>
         </div>
-    </footer>
+    </div>
+</div>
 
-    <script>
-        // JavaScript for mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+<script>
+// JavaScript for mobile menu toggle
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
 
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+mobileMenuButton.addEventListener('click', () => {
+mobileMenu.classList.toggle('hidden');
+});
+
+// Close mobile menu when a link is clicked
+const mobileNavLinks = mobileMenu.getElementsByTagName('a');
+for (let link of mobileNavLinks) {
+link.addEventListener('click', () => {
+mobileMenu.classList.add('hidden');
+});
+}
+
+// --- SCRIPT FOR MAIN CONTACT FORM SUBMISSION WITH RECAPTCHA ---
+// Note: IDs for this form are now prefixed with 'contact-' to avoid conflicts
+
+const contactForm = document.getElementById('contactForm');
+const contactFormContainer = document.getElementById('contact-form-container');
+const contactThankYouMessage = document.getElementById('contact-thankYouMessage');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LcVYGkrAAAAAPYEL_TM5yH2ZQjrABWCrwvvL4s4', {action: 'submit'}).then(function(token) {
+
+                document.getElementById('g-recaptcha-response').value = token;
+
+                const formData = new FormData(contactForm);
+
+                fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        contactFormContainer.classList.add('hidden');
+                        contactThankYouMessage.classList.remove('hidden');
+                    } else {
+                        response.json().then(data => {
+                            alert(data.message || 'Sorry, there was an error sending your message. Please try again later.');
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Form submission network error:', error);
+                    alert('Oops! There was a problem submitting your form. Please check your connection and try again.');
+                });
+            }).catch(error => {
+                console.error('reCAPTCHA execution error:', error);
+                alert('Could not verify reCAPTCHA. Please check if you have an ad-blocker enabled or try again.');
+            });
+        });
+    });
+}
+
+// --- NEW JAVASCRIPT FOR CATERING FORM MODAL ---
+
+const navInquireNowBtn = document.getElementById('navInquireNowBtn');
+const mobileNavInquireNowBtn = document.getElementById('mobileNavInquireNowBtn');
+
+const inquireNowBtn = document.getElementById('inquireNowBtn'); // Existing button in catering section
+const cateringModal = document.getElementById('cateringModal');
+const body = document.body;
+
+// Function to open the modal (re-usable)
+function openCateringModal(e) {
+    e.preventDefault(); // Prevent default anchor link behavior
+    cateringModal.classList.add('open');
+    body.classList.add('modal-open'); // Add class to body to prevent scrolling
+    initializeCateringFormJS(); // Initialize/re-initialize catering form JS when modal opens
+}
+
+// Add event listeners to all Inquire Now buttons
+inquireNowBtn.addEventListener('click', openCateringModal);
+if (navInquireNowBtn) { // Check if the element exists before adding listener
+    navInquireNowBtn.addEventListener('click', openCateringModal);
+}
+if (mobileNavInquireNowBtn) { // Check if the element exists before adding listener
+    mobileNavInquireNowBtn.addEventListener('click', openCateringModal);
+
+};
+
+// Close the modal when clicking outside of the modal-content
+cateringModal.addEventListener('click', (e) => {
+    // Check if the click occurred directly on the modal-overlay itself, not on its children
+    if (e.target === cateringModal) {
+        cateringModal.classList.remove('open');
+        body.classList.remove('modal-open'); // Remove class from body to re-enable scrolling
+        // resetCateringForm(); // Reset form when closing, handled by initializeCateringFormJS
+    }
+});
+
+// Function to handle the catering form's JavaScript logic
+// This function is called every time the modal is opened
+function initializeCateringFormJS() {
+    const MAX_TOPPINGS = 5;
+    const MAX_DRIZZLES = 5;
+
+    // Get references to catering form elements *inside* the modal
+    const pancakeForm = document.getElementById('catering-pancakeForm');
+    const confirmationScreen = document.getElementById('catering-confirmationScreen');
+    const orderSummaryContainer = document.getElementById('catering-orderSummaryContainer');
+    const finalConfirmationMessage = document.getElementById('catering-finalConfirmationMessage');
+    const editOrderBtn = document.getElementById('catering-editOrderBtn');
+    const confirmSubmitBtn = document.getElementById('catering-confirmSubmitBtn');
+    // const submitFormBtn = document.getElementById('catering-submitFormBtn'); // Unused in this logic, but good to have
+
+    // Reset form to initial view every time it's opened
+    pancakeForm.reset();
+    pancakeForm.style.display = 'block';
+    confirmationScreen.style.display = 'none';
+    finalConfirmationMessage.style.display = 'none';
+
+    // Hide all error messages for catering form
+    const cateringErrorMessages = pancakeForm.querySelectorAll('.error-message');
+    cateringErrorMessages.forEach(error => {
+        error.style.display = 'none';
+    });
+
+    const allToppingCheckboxes = pancakeForm.querySelectorAll('input[name="toppings"]');
+    const allDrizzleCheckboxes = pancakeForm.querySelectorAll('input[name="drizzle"]');
+
+    function enforceCheckboxLimit(checkboxes, limit) {
+        let checkedCount = 0;
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                checkedCount++;
+            }
         });
 
-        // Close mobile menu when a link is clicked
-        const mobileNavLinks = mobileMenu.getElementsByTagName('a');
-        for (let link of mobileNavLinks) {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
+        checkboxes.forEach(checkbox => {
+            const label = checkbox.closest('.checkbox-label');
+            if (checkedCount >= limit && !checkbox.checked) {
+                checkbox.disabled = true;
+                label.classList.add('disabled-checkbox-label');
+            } else {
+                checkbox.disabled = false;
+                label.classList.remove('disabled-checkbox-label');
+            }
+        });
+    }
+
+    // Re-apply event listeners for checkboxes (remove existing first to avoid duplicates)
+    allToppingCheckboxes.forEach(checkbox => {
+        checkbox.removeEventListener('change', () => enforceCheckboxLimit(allToppingCheckboxes, MAX_TOPPINGS)); // Remove old
+        checkbox.addEventListener('change', () => enforceCheckboxLimit(allToppingCheckboxes, MAX_TOPPINGS)); // Add new
+    });
+    allDrizzleCheckboxes.forEach(checkbox => {
+        checkbox.removeEventListener('change', () => enforceCheckboxLimit(allDrizzleCheckboxes, MAX_DRIZZLES)); // Remove old
+        checkbox.addEventListener('change', () => enforceCheckboxLimit(allDrizzleCheckboxes, MAX_DRIZZLES)); // Add new
+    });
+
+    // Run initial limit enforcement
+    enforceCheckboxLimit(allToppingCheckboxes, MAX_TOPPINGS);
+    enforceCheckboxLimit(allDrizzleCheckboxes, MAX_DRIZZLES);
+
+
+    const eventSizeInput = document.getElementById('catering-eventSize');
+    const eventSizeError = document.getElementById('catering-eventSizeError');
+
+    const validateEventSizeLive = () => {
+        const value = eventSizeInput.value.trim();
+        const parsedValue = parseInt(value);
+        if (value === '' || isNaN(parsedValue) || !Number.isInteger(parsedValue) || parsedValue < 25) {
+            eventSizeError.style.display = 'block';
+        } else {
+            eventSizeError.style.display = 'none';
+        }
+    };
+
+    eventSizeInput.removeEventListener('input', validateEventSizeLive); // Remove old
+    eventSizeInput.addEventListener('input', validateEventSizeLive); // Add new
+
+    eventSizeInput.removeEventListener('keydown', function(event) { // Remove old keydown
+        if (
+            event.key === 'Backspace' || event.key === 'Delete' || event.key === 'Tab' ||
+            event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'Home' || event.key === 'End'
+        ) { return; }
+        if (!/\d/.test(event.key)) { event.preventDefault(); }
+    });
+    eventSizeInput.addEventListener('keydown', function(event) { // Add new keydown
+        if (
+            event.key === 'Backspace' || event.key === 'Delete' || event.key === 'Tab' ||
+            event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'Home' || event.key === 'End'
+        ) { return; }
+        if (!/\d/.test(event.key)) { event.preventDefault(); }
+    });
+
+    eventSizeInput.removeEventListener('blur', validateEventSizeLive); // Remove old
+    eventSizeInput.addEventListener('blur', validateEventSizeLive); // Add new
+
+    // Phone number input restriction
+    const phoneInput = document.getElementById('catering-phone');
+    const phoneInputHandler = function() { this.value = this.value.replace(/[^0-9]/g, ''); };
+    const phoneKeydownHandler = function(event) {
+        if (
+            event.key === 'Backspace' || event.key === 'Delete' || event.key === 'Tab' ||
+            event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'Home' || event.key === 'End'
+        ) { return; }
+        if (!/\d/.test(event.key)) { event.preventDefault(); }
+    };
+
+    phoneInput.removeEventListener('input', phoneInputHandler);
+    phoneInput.addEventListener('input', phoneInputHandler);
+    phoneInput.removeEventListener('keydown', phoneKeydownHandler);
+    phoneInput.addEventListener('keydown', phoneKeydownHandler);
+
+    // Set min date for event date
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    document.getElementById('catering-eventDate').min = `${year}-${month}-${day}`;
+
+    validateEventSizeLive(); // Run initial validation on load of form
+
+    // --- CATERING FORM SUBMISSION (TRIGGERING CONFIRMATION) ---
+    pancakeForm.removeEventListener('submit', handleCateringFormSubmit); // Remove old listener
+    pancakeForm.addEventListener('submit', handleCateringFormSubmit); // Add new listener
+
+    function handleCateringFormSubmit(event) {
+        event.preventDefault(); // Prevent default form submission initially
+
+        let isValid = true;
+
+        function validateField(elementId, errorId, validationFn) {
+            const element = document.getElementById(elementId);
+            const errorElement = document.getElementById(errorId);
+            if (!validationFn(element.value.trim())) {
+                errorElement.style.display = 'block';
+                isValid = false;
+            } else {
+                errorElement.style.display = 'none';
+            }
         }
 
-        // --- SCRIPT FOR FORM SUBMISSION WITH RECAPTCHA ---
-        
-        const contactForm = document.getElementById('contactForm');
-        const formContainer = document.getElementById('form-container');
-        const thankYouMessage = document.getElementById('thankYouMessage');
-
-        contactForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            grecaptcha.ready(function() {
-                // REMEMBER TO REPLACE 'YOUR_SITE_KEY'
-                grecaptcha.execute('6LcVYGkrAAAAAPYEL_TM5yH2ZQjrABWCrwvvL4s4', {action: 'submit'}).then(function(token) {
-                    
-                    document.getElementById('g-recaptcha-response').value = token;
-
-                    const formData = new FormData(contactForm);
-                    
-                    fetch(contactForm.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json' 
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            formContainer.classList.add('hidden');
-                            thankYouMessage.classList.remove('hidden');
-                        } else {
-                            response.json().then(data => {
-                                alert(data.message || 'Sorry, there was an error sending your message. Please try again later.');
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Form submission network error:', error);
-                        alert('Oops! There was a problem submitting your form. Please check your connection and try again.');
-                    });
-                }).catch(error => {
-                    // THIS IS THE NEW, IMPORTANT PART
-                    console.error('reCAPTCHA execution error:', error);
-                    alert('Could not verify reCAPTCHA. Please check if you have an ad-blocker enabled or try again.');
-                });
-            });
+        // Perform all validations using catering form's specific IDs
+        validateField('catering-firstName', 'catering-firstNameError', value => value !== '');
+        validateField('catering-lastName', 'catering-lastNameError', value => value !== '');
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        validateField('catering-email', 'catering-emailError', value => emailPattern.test(value));
+        const phonePattern = /^\d{10}$/; // This pattern already expects 10 digits
+        validateField('catering-phone', 'catering-phoneError', value => phonePattern.test(value));
+        validateField('catering-eventSize', 'catering-eventSizeError', value => {
+            const parsedValue = parseInt(value);
+            return value !== '' && isNaN(parsedValue) === false && Number.isInteger(parsedValue) && parsedValue >= 25;
         });
-    </script>
+        validateField('catering-eventDate', 'catering-eventDateError', value => value !== '');
+
+        if (!isValid) {
+            return;
+        }
+
+        showConfirmationScreen();
+    }
+
+    // --- CONFIRMATION SCREEN FUNCTIONS ---
+    function showConfirmationScreen() {
+        const formData = new FormData(pancakeForm);
+        const data = {};
+        for (let [key, value] of formData.entries()) {
+            if (key === 'toppings' || key === 'drizzle' || key === 'fruit' || key === 'coldBrew') {
+                if (!data[key]) data[key] = [];
+                data[key].push(value);
+            } else {
+                data[key] = value;
+            }
+        }
+
+        let summaryHTML = '<h3>Review Your Information:</h3><ul>';
+        summaryHTML += `<li><strong>Name:</strong> ${data.firstName || ''} ${data.lastName || ''}</li>`;
+        summaryHTML += `<li><strong>Email:</strong> ${data.email || ''}</li>`;
+        summaryHTML += `<li><strong>Phone:</strong> ${data.phone || ''}</li>`;
+        summaryHTML += `<li><strong>Newsletter Opt-in:</strong> ${data.newsletterOptIn ? 'Yes' : 'No'}</li>`;
+        summaryHTML += `<li><strong>Event Size:</strong> ${data.eventSize || ''} people</li>`;
+        summaryHTML += `<li><strong>Event Date:</strong> ${data.eventDate || ''}</li>`;
+        summaryHTML += `<li><strong>Toppings:</strong> ${data.toppings ? data.toppings.join(', ') : 'None selected'}</li>`;
+        summaryHTML += `<li><strong>Drizzle:</strong> ${data.drizzle ? data.drizzle.join(', ') : 'None selected'}</li>`;
+        summaryHTML += `<li><strong>Fruit Add-ons:</strong> ${data.fruit ? data.fruit.join(', ') : 'None selected'}</li>`;
+        summaryHTML += `<li><strong>Cold Brew Add-ons:</strong> ${data.coldBrew ? data.coldBrew.join(', ') : 'None selected'}</li>`;
+        summaryHTML += `<li><strong>Questions:</strong> ${data.instructions || 'None'}</li>`;
+        summaryHTML += '</ul>';
+
+        const detailsBox = document.createElement('div');
+        detailsBox.className = 'summary-details-box';
+        detailsBox.innerHTML = summaryHTML;
+
+        orderSummaryContainer.innerHTML = '';
+        orderSummaryContainer.appendChild(detailsBox);
+
+        pancakeForm.style.display = 'none';
+        confirmationScreen.style.display = 'flex';
+    }
+
+    // --- EDIT ORDER BUTTON ---
+    editOrderBtn.removeEventListener('click', handleEditOrder); // Remove old listener
+    editOrderBtn.addEventListener('click', handleEditOrder); // Add new listener
+    function handleEditOrder() {
+        confirmationScreen.style.display = 'none';
+        pancakeForm.style.display = 'block';
+    }
+
+    // --- CONFIRM & SUBMIT BUTTON (THIS IS WHERE WE'LL ADD THE N8N FETCH) ---
+    confirmSubmitBtn.removeEventListener('click', handleConfirmSubmit); // Remove old listener
+    confirmSubmitBtn.addEventListener('click', handleConfirmSubmit); // Add new listener
+    async function handleConfirmSubmit() {
+        // !!! IMPORTANT: Replace this with your actual n8n Webhook URL !!!
+        const n8nWebhookUrl = 'https://n8n.joemur.com/webhook/catering-inquiry'; 
+
+        const formData = new FormData(pancakeForm);
+        const payload = {};
+
+        // Convert FormData to a plain object for JSON submission
+        for (let [key, value] of formData.entries()) {
+            // Handle multiple selections for toppings, drizzles, fruit, and cold brew
+            if (key === 'toppings' || key === 'drizzle' || key === 'fruit' || key === 'coldBrew') {
+                if (!payload[key]) {
+                    payload[key] = [];
+                }
+                payload[key].push(value);
+            } else {
+                payload[key] = value;
+            }
+        }
+        // Add a timestamp for when the inquiry was sent
+        payload.timestamp = new Date().toISOString();
+
+        try {
+            const response = await fetch(n8nWebhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                // If n8n responded with success (HTTP 200 series)
+                console.log('Catering inquiry sent successfully to n8n!');
+                confirmationScreen.style.display = 'none';
+                finalConfirmationMessage.style.display = 'flex';
+
+                // Optional: Close modal after a delay if desired
+                setTimeout(() => {
+                    cateringModal.classList.remove('open');
+                    body.classList.remove('modal-open');
+                    // Reset the form for the next time it's opened
+                    pancakeForm.reset();
+                    // You might want to re-initialize the JS to clear error messages etc.
+                    initializeCateringFormJS(); // Re-initialize after modal closes
+                }, 3000); // Closes after 3 seconds
+
+            } else {
+                // If n8n returned an error status
+                const errorData = await response.json(); // Try to parse error response from n8n
+                console.error('Error sending catering inquiry to n8n:', response.status, errorData);
+                alert(`There was an error submitting your order: ${errorData.message || 'Server error'}. Please try again.`);
+                confirmationScreen.style.display = 'none';
+                pancakeForm.style.display = 'block'; // Go back to the form to allow user to retry
+            }
+        } catch (error) {
+            console.error('Network error during catering inquiry submission:', error);
+            alert("A network error occurred while submitting your order. Please check your internet connection and try again.");
+            confirmationScreen.style.display = 'none';
+            pancakeForm.style.display = 'block'; // Go back to the form
+        }
+    }
+}
+</script>
 
 
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    createChat({
-        webhookUrl: 'https://n8n.joemur.com/webhook/99d91aea-a9be-46db-ab40-85bf1fa36772/chat', 
-        initialMessages: ['Hi there! Welcome to Mini Pancake Hut! 🥞 How can I help you today?']
-    });
+createChat({
+webhookUrl: 'https://n8n.joemur.com/webhook/99d91aea-a9be-46db-ab40-85bf1fa36772/chat',
+initialMessages: ['Hi there! Welcome to Mini Pancake Hut! 🥞 How can I help you today?']
+});
 </script>
-
 </body>
 </html>
