@@ -1005,395 +1005,248 @@ referrerpolicy="no-referrer-when-downgrade">
 </div>
 
 <script>
-// JavaScript for mobile menu toggle
+// --- GLOBAL SETUP & HELPER FUNCTIONS ---
+
+// Mobile menu toggle (No changes needed)
 const mobileMenuButton = document.getElementById('mobile-menu-button');
 const mobileMenu = document.getElementById('mobile-menu');
-
 mobileMenuButton.addEventListener('click', () => {
-mobileMenu.classList.toggle('hidden');
+    mobileMenu.classList.toggle('hidden');
 });
-
-// Close mobile menu when a link is clicked
 const mobileNavLinks = mobileMenu.getElementsByTagName('a');
 for (let link of mobileNavLinks) {
-link.addEventListener('click', () => {
-mobileMenu.classList.add('hidden');
-});
+    link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+    });
 }
 
-// --- SCRIPT FOR MAIN CONTACT FORM SUBMISSION WITH RECAPTCHA ---
-// Note: IDs for this form are now prefixed with 'contact-' to avoid conflicts
-
+// --- MAIN CONTACT FORM (No changes needed) ---
 const contactForm = document.getElementById('contactForm');
-const contactFormContainer = document.getElementById('contact-form-container');
-const contactThankYouMessage = document.getElementById('contact-thankYouMessage');
-
 if (contactForm) {
-contactForm.addEventListener('submit', function(event) {
-event.preventDefault();
-
-grecaptcha.ready(function() {
-grecaptcha.execute('6LcVYGkrAAAAAPYEL_TM5yH2ZQjrABWCrwvvL4s4', {action: 'submit'}).then(function(token) {
-
-document.getElementById('g-recaptcha-response').value = token;
-
-const formData = new FormData(contactForm);
-
-fetch(contactForm.action, {
-method: 'POST',
-body: formData,
-headers: {
-'Accept': 'application/json'
-}
-})
-.then(response => {
-if (response.ok) {
-contactFormContainer.classList.add('hidden');
-contactThankYouMessage.classList.remove('hidden');
-} else {
-response.json().then(data => {
-alert(data.message || 'Sorry, there was an error sending your message. Please try again later.');
-});
-}
-})
-.catch(error => {
-console.error('Form submission network error:', error);
-alert('Oops! There was a problem submitting your form. Please check your connection and try again.');
-});
-}).catch(error => {
-console.error('reCAPTCHA execution error:', error);
-alert('Could not verify reCAPTCHA. Please check if you have an ad-blocker enabled or try again.');
-});
-});
-});
+    contactForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LcVYGkrAAAAAPYEL_TM5yH2ZQjrABWCrwvvL4s4', {action: 'submit'}).then(function(token) {
+                document.getElementById('g-recaptcha-response').value = token;
+                const formData = new FormData(contactForm);
+                fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {'Accept': 'application/json'}
+                })
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('contact-form-container').classList.add('hidden');
+                        document.getElementById('contact-thankYouMessage').classList.remove('hidden');
+                    } else {
+                        response.json().then(data => alert(data.message || 'Sorry, there was an error.'));
+                    }
+                })
+                .catch(error => alert('Oops! There was a problem submitting your form.'));
+            });
+        });
+    });
 }
 
-// --- NEW JAVASCRIPT FOR CATERING FORM MODAL ---
 
-const navInquireNowBtn = document.getElementById('navInquireNowBtn');
-const mobileNavInquireNowBtn = document.getElementById('mobileNavInquireNowBtn');
+// --- CATERING FORM MODAL ---
+// This main block runs only ONCE when the page loads
+document.addEventListener('DOMContentLoaded', () => {
 
-const inquireNowBtn = document.getElementById('inquireNowBtn'); // Existing button in catering section
-const cateringModal = document.getElementById('cateringModal');
-const body = document.body;
+    // --- Get all elements ONCE ---
+    const allInquireButtons = document.querySelectorAll('#navInquireNowBtn, #mobileNavInquireNowBtn, #inquireNowBtn');
+    const cateringModal = document.getElementById('cateringModal');
+    const body = document.body;
 
-// Function to open the modal (re-usable)
-function openCateringModal(e) {
-e.preventDefault(); // Prevent default anchor link behavior
-cateringModal.classList.add('open');
-body.classList.add('modal-open'); // Add class to body to prevent scrolling
-initializeCateringFormJS(); // Initialize/re-initialize catering form JS when modal opens
-}
+    const pancakeForm = document.getElementById('catering-pancakeForm');
+    const confirmationScreen = document.getElementById('catering-confirmationScreen');
+    const finalConfirmationMessage = document.getElementById('catering-finalConfirmationMessage');
+    const orderSummaryContainer = document.getElementById('catering-orderSummaryContainer');
+    const editOrderBtn = document.getElementById('catering-editOrderBtn');
+    const confirmSubmitBtn = document.getElementById('catering-confirmSubmitBtn');
+    const cateringLoadingOverlay = document.getElementById('catering-loadingOverlay');
+    const eventSizeInput = document.getElementById('catering-eventSize');
+    const eventSizeError = document.getElementById('catering-eventSizeError');
+    const phoneInput = document.getElementById('catering-phone');
+    const allToppingCheckboxes = pancakeForm.querySelectorAll('input[name="toppings"]');
+    const allDrizzleCheckboxes = pancakeForm.querySelectorAll('input[name="drizzle"]');
+    
+    const MAX_TOPPINGS = 5;
+    const MAX_DRIZZLES = 5;
 
-// Add event listeners to all Inquire Now buttons
-inquireNowBtn.addEventListener('click', openCateringModal);
-if (navInquireNowBtn) { // Check if the element exists before adding listener
-navInquireNowBtn.addEventListener('click', openCateringModal);
-}
-if (mobileNavInquireNowBtn) { // Check if the element exists before adding listener
-mobileNavInquireNowBtn.addEventListener('click', openCateringModal);
+    // --- Define all handler functions ONCE ---
 
-};
-
-// Close the modal when clicking outside of the modal-content
-cateringModal.addEventListener('click', (e) => {
-// Check if the click occurred directly on the modal-overlay itself, not on its children
-if (e.target === cateringModal) {
-cateringModal.classList.remove('open');
-body.classList.remove('modal-open'); // Remove class from body to re-enable scrolling
-// resetCateringForm(); // Reset form when closing, handled by initializeCateringFormJS
-}
-});
-
-// Function to handle the catering form's JavaScript logic
-// This function is called every time the modal is opened
-function initializeCateringFormJS() {
-const MAX_TOPPINGS = 5;
-const MAX_DRIZZLES = 5;
-
-// Get references to catering form elements *inside* the modal
-const pancakeForm = document.getElementById('catering-pancakeForm');
-const confirmationScreen = document.getElementById('catering-confirmationScreen');
-const orderSummaryContainer = document.getElementById('catering-orderSummaryContainer');
-const finalConfirmationMessage = document.getElementById('catering-finalConfirmationMessage');
-const editOrderBtn = document.getElementById('catering-editOrderBtn');
-const confirmSubmitBtn = document.getElementById('catering-confirmSubmitBtn');
-const cateringLoadingOverlay = document.getElementById('catering-loadingOverlay'); // Get the new overlay
-
-
-// Reset form to initial view every time it's opened
-pancakeForm.reset();
-pancakeForm.style.display = 'block';
-confirmationScreen.style.display = 'none';
-finalConfirmationMessage.style.display = 'none';
-
-// Hide all error messages for catering form
-const cateringErrorMessages = pancakeForm.querySelectorAll('.error-message');
-cateringErrorMessages.forEach(error => {
-error.style.display = 'none';
-});
-
-const allToppingCheckboxes = pancakeForm.querySelectorAll('input[name="toppings"]');
-const allDrizzleCheckboxes = pancakeForm.querySelectorAll('input[name="drizzle"]');
-
-function enforceCheckboxLimit(checkboxes, limit) {
-let checkedCount = 0;
-checkboxes.forEach(checkbox => {
-if (checkbox.checked) {
-checkedCount++;
-}
-});
-
-checkboxes.forEach(checkbox => {
-const label = checkbox.closest('.checkbox-label');
-if (checkedCount >= limit && !checkbox.checked) {
-checkbox.disabled = true;
-label.classList.add('disabled-checkbox-label');
-} else {
-checkbox.disabled = false;
-label.classList.remove('disabled-checkbox-label');
-}
-});
-}
-
-// Re-apply event listeners for checkboxes (remove existing first to avoid duplicates)
-allToppingCheckboxes.forEach(checkbox => {
-checkbox.removeEventListener('change', () => enforceCheckboxLimit(allToppingCheckboxes, MAX_TOPPINGS)); // Remove old
-checkbox.addEventListener('change', () => enforceCheckboxLimit(allToppingCheckboxes, MAX_TOPPINGS)); // Add new
-});
-allDrizzleCheckboxes.forEach(checkbox => {
-checkbox.removeEventListener('change', () => enforceCheckboxLimit(allDrizzleCheckboxes, MAX_DRIZZLES)); // Remove old
-checkbox.addEventListener('change', () => enforceCheckboxLimit(allDrizzleCheckboxes, MAX_DRIZZLES)); // Add new
-});
-
-// Run initial limit enforcement
-enforceCheckboxLimit(allToppingCheckboxes, MAX_TOPPINGS);
-enforceCheckboxLimit(allDrizzleCheckboxes, MAX_DRIZZLES);
-
-
-const eventSizeInput = document.getElementById('catering-eventSize');
-const eventSizeError = document.getElementById('catering-eventSizeError');
-
-const validateEventSizeLive = () => {
-const value = eventSizeInput.value.trim();
-const parsedValue = parseInt(value);
-if (value === '' || isNaN(parsedValue) || !Number.isInteger(parsedValue) || parsedValue < 25) {
-eventSizeError.style.display = 'block';
-} else {
-eventSizeError.style.display = 'none';
-}
-};
-
-eventSizeInput.removeEventListener('input', validateEventSizeLive); // Remove old
-eventSizeInput.addEventListener('input', validateEventSizeLive); // Add new
-
-eventSizeInput.removeEventListener('keydown', function(event) { // Remove old keydown
-if (
-event.key === 'Backspace' || event.key === 'Delete' || event.key === 'Tab' ||
-event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'Home' || event.key === 'End'
-) { return; }
-if (!/\d/.test(event.key)) { event.preventDefault(); }
-});
-eventSizeInput.addEventListener('keydown', function(event) { // Add new keydown
-if (
-event.key === 'Backspace' || event.key === 'Delete' || event.key === 'Tab' ||
-event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'Home' || event.key === 'End'
-) { return; }
-if (!/\d/.test(event.key)) { event.preventDefault(); }
-});
-
-eventSizeInput.removeEventListener('blur', validateEventSizeLive); // Remove old
-eventSizeInput.addEventListener('blur', validateEventSizeLive); // Add new
-
-// Phone number input restriction
-const phoneInput = document.getElementById('catering-phone');
-const phoneInputHandler = function() { this.value = this.value.replace(/[^0-9]/g, ''); };
-const phoneKeydownHandler = function(event) {
-if (
-event.key === 'Backspace' || event.key === 'Delete' || event.key === 'Tab' ||
-event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'Home' || event.key === 'End'
-) { return; }
-if (!/\d/.test(event.key)) { event.preventDefault(); }
-};
-
-phoneInput.removeEventListener('input', phoneInputHandler);
-phoneInput.addEventListener('input', phoneInputHandler);
-phoneInput.removeEventListener('keydown', phoneKeydownHandler);
-phoneInput.addEventListener('keydown', phoneKeydownHandler);
-
-// Set min date for event date
-const today = new Date();
-const year = today.getFullYear();
-const month = (today.getMonth() + 1).toString().padStart(2, '0');
-const day = today.getDate().toString().padStart(2, '0');
-document.getElementById('catering-eventDate').min = `${year}-${month}-${day}`;
-
-validateEventSizeLive(); // Run initial validation on load of form
-
-// --- CATERING FORM SUBMISSION (TRIGGERING CONFIRMATION) ---
-pancakeForm.removeEventListener('submit', handleCateringFormSubmit); // Remove old listener
-pancakeForm.addEventListener('submit', handleCateringFormSubmit); // Add new listener
-
-function handleCateringFormSubmit(event) {
-event.preventDefault(); // Prevent default form submission initially
-
-let isValid = true;
-
-function validateField(elementId, errorId, validationFn) {
-const element = document.getElementById(elementId);
-const errorElement = document.getElementById(errorId);
-if (!validationFn(element.value.trim())) {
-errorElement.style.display = 'block';
-isValid = false;
-} else {
-errorElement.style.display = 'none';
-}
-}
-
-// Perform all validations using catering form's specific IDs
-validateField('catering-firstName', 'catering-firstNameError', value => value !== '');
-validateField('catering-lastName', 'catering-lastNameError', value => value !== '');
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-validateField('catering-email', 'catering-emailError', value => emailPattern.test(value));
-const phonePattern = /^\d{10}$/; // This pattern already expects 10 digits
-validateField('catering-phone', 'catering-phoneError', value => phonePattern.test(value));
-validateField('catering-eventSize', 'catering-eventSizeError', value => {
-const parsedValue = parseInt(value);
-return value !== '' && isNaN(parsedValue) === false && Number.isInteger(parsedValue) && parsedValue >= 25;
-});
-validateField('catering-eventDate', 'catering-eventDateError', value => value !== '');
-
-if (!isValid) {
-return;
-}
-
-showConfirmationScreen();
-}
-
-// --- CONFIRMATION SCREEN FUNCTIONS ---
-function showConfirmationScreen() {
-const formData = new FormData(pancakeForm);
-const data = {};
-for (let [key, value] of formData.entries()) {
-if (key === 'toppings' || key === 'drizzle' || key === 'fruit' || key === 'coldBrew') {
-if (!data[key]) data[key] = [];
-data[key].push(value);
-} else {
-data[key] = value;
-}
-}
-
-let summaryHTML = '<h3>Review Your Information:</h3><ul>';
-summaryHTML += `<li><strong>Name:</strong> ${data.firstName || ''} ${data.lastName || ''}</li>`;
-summaryHTML += `<li><strong>Email:</strong> ${data.email || ''}</li>`;
-summaryHTML += `<li><strong>Phone:</strong> ${data.phone || ''}</li>`;
-summaryHTML += `<li><strong>Newsletter Opt-in:</strong> ${data.newsletterOptIn ? 'Yes' : 'No'}</li>`;
-summaryHTML += `<li><strong>Event Size:</strong> ${data.eventSize || ''} people</li>`;
-summaryHTML += `<li><strong>Event Date:</strong> ${data.eventDate || ''}</li>`;
-summaryHTML += `<li><strong>Toppings:</strong> ${data.toppings ? data.toppings.join(', ') : 'None selected'}</li>`;
-summaryHTML += `<li><strong>Drizzle:</strong> ${data.drizzle ? data.drizzle.join(', ') : 'None selected'}</li>`;
-summaryHTML += `<li><strong>Fruit Add-ons:</strong> ${data.fruit ? data.fruit.join(', ') : 'None selected'}</li>`;
-summaryHTML += `<li><strong>Cold Brew Add-ons:</strong> ${data.coldBrew ? data.coldBrew.join(', ') : 'None selected'}</li>`;
-summaryHTML += `<li><strong>Questions:</strong> ${data.instructions || 'None'}</li>`;
-summaryHTML += '</ul>';
-
-const detailsBox = document.createElement('div');
-detailsBox.className = 'summary-details-box';
-detailsBox.innerHTML = summaryHTML;
-
-orderSummaryContainer.innerHTML = '';
-orderSummaryContainer.appendChild(detailsBox);
-
-pancakeForm.style.display = 'none';
-confirmationScreen.style.display = 'flex';
-}
-
-// --- EDIT ORDER BUTTON ---
-editOrderBtn.removeEventListener('click', handleEditOrder); // Remove old listener
-editOrderBtn.addEventListener('click', handleEditOrder); // Add new listener
-function handleEditOrder() {
-confirmationScreen.style.display = 'none';
-pancakeForm.style.display = 'block';
-}
-
-// --- CONFIRM & SUBMIT BUTTON (THIS IS WHERE WE'LL ADD THE N8N FETCH) ---
-confirmSubmitBtn.removeEventListener('click', handleConfirmSubmit); // Remove old listener
-confirmSubmitBtn.addEventListener('click', handleConfirmSubmit); // Add new listener
-async function handleConfirmSubmit() {
-    // Show loading overlay
-    cateringLoadingOverlay.classList.add('active');
-    // Disable the submit button to prevent multiple clicks
-    confirmSubmitBtn.disabled = true;
-    confirmSubmitBtn.textContent = 'Submitting...'; // Optional: Change button text
-
-
-// !!! IMPORTANT: Replace this with your actual n8n Webhook URL !!!
-const n8nWebhookUrl = 'https://n8n.joemur.com/webhook/catering-inquiry';
-
-const formData = new FormData(pancakeForm);
-const payload = {};
-
-// Convert FormData to a plain object for JSON submission
-for (let [key, value] of formData.entries()) {
-// Handle multiple selections for toppings, drizzles, fruit, and cold brew
-if (key === 'toppings' || key === 'drizzle' || key === 'fruit' || key === 'coldBrew') {
-if (!payload[key]) {
-payload[key] = [];
-}
-payload[key].push(value);
-} else {
-payload[key] = value;
-}
-}
-// Add a timestamp for when the inquiry was sent
-payload.timestamp = new Date().toISOString();
-
-try {
-const response = await fetch(n8nWebhookUrl, {
-method: 'POST',
-headers: {
-'Content-Type': 'application/json'
-},
-body: JSON.stringify(payload)
-});
-
-if (response.ok) {
-// If n8n responded with success (HTTP 200 series)
-console.log('Catering inquiry sent successfully to n8n!');
-confirmationScreen.style.display = 'none';
-finalConfirmationMessage.style.display = 'flex';
-
-// Optional: Close modal after a delay if desired
-setTimeout(() => {
-cateringModal.classList.remove('open');
-body.classList.remove('modal-open');
-// Reset the form for the next time it's opened
-pancakeForm.reset();
-// You might want to re-initialize the JS to clear error messages etc.
-initializeCateringFormJS(); // Re-initialize after modal closes
-}, 3000); // Closes after 3 seconds
-
-} else {
-// If n8n returned an error status
-const errorData = await response.json(); // Try to parse error response from n8n
-console.error('Error sending catering inquiry to n8n:', response.status, errorData);
-alert(`There was an error submitting your order: ${errorData.message || 'Server error'}. Please try again.`);
-confirmationScreen.style.display = 'none';
-pancakeForm.style.display = 'block'; // Go back to the form to allow user to retry
-}
-} catch (error) {
-console.error('Network error during catering inquiry submission:', error);
-alert("A network error occurred while submitting your order. Please check your internet connection and try again.");
-confirmationScreen.style.display = 'none';
-pancakeForm.style.display = 'block'; // Go back to the form
-} finally {
-        // Always hide loading overlay and re-enable button regardless of success or failure
-        cateringLoadingOverlay.classList.remove('active');
-        confirmSubmitBtn.disabled = false;
-        confirmSubmitBtn.textContent = 'Confirm & Submit'; // Reset button text
+    function openCateringModal(e) {
+        e.preventDefault();
+        resetCateringForm(); // Call the reset function
+        cateringModal.classList.add('open');
+        body.classList.add('modal-open');
     }
-}
-}
+
+    function closeCateringModal(e) {
+        if (e.target === cateringModal) {
+            cateringModal.classList.remove('open');
+            body.classList.remove('modal-open');
+        }
+    }
+    
+    // This function now ONLY resets the state, it doesn't add listeners
+    function resetCateringForm() {
+        pancakeForm.reset();
+        pancakeForm.style.display = 'block';
+        confirmationScreen.style.display = 'none';
+        finalConfirmationMessage.style.display = 'none';
+
+        const cateringErrorMessages = pancakeForm.querySelectorAll('.error-message');
+        cateringErrorMessages.forEach(error => error.style.display = 'none');
+
+        // Reset checkbox limits
+        enforceCheckboxLimit(allToppingCheckboxes, MAX_TOPPINGS);
+        enforceCheckboxLimit(allDrizzleCheckboxes, MAX_DRIZZLES);
+    }
+    
+    function enforceCheckboxLimit(checkboxes, limit) {
+        const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+        checkboxes.forEach(checkbox => {
+            const label = checkbox.closest('.checkbox-label');
+            if (checkedCount >= limit && !checkbox.checked) {
+                checkbox.disabled = true;
+                label.classList.add('disabled-checkbox-label');
+            } else {
+                checkbox.disabled = false;
+                label.classList.remove('disabled-checkbox-label');
+            }
+        });
+    }
+
+    function handleCateringFormSubmit(event) {
+        event.preventDefault();
+        let isValid = true;
+        
+        // Simple validation logic
+        const requiredFields = ['catering-firstName', 'catering-lastName', 'catering-email', 'catering-phone', 'catering-eventSize', 'catering-eventDate'];
+        requiredFields.forEach(id => {
+            const input = document.getElementById(id);
+            const error = document.getElementById(`${id}Error`);
+            if (!input.value.trim() || !input.checkValidity()) {
+                isValid = false;
+                error.style.display = 'block';
+            } else {
+                error.style.display = 'none';
+            }
+        });
+        
+        if (!isValid) return;
+        
+        showConfirmationScreen();
+    }
+    
+    function showConfirmationScreen() {
+        const formData = new FormData(pancakeForm);
+        const data = Object.fromEntries(formData.entries()); // Simplified conversion
+        
+        // Handle checkbox groups
+        data.toppings = formData.getAll('toppings');
+        data.drizzle = formData.getAll('drizzle');
+        data.fruit = formData.getAll('fruit');
+        data.coldBrew = formData.getAll('coldBrew');
+
+        let summaryHTML = `<h3>Review Your Information:</h3><ul>
+            <li><strong>Name:</strong> ${data.firstName} ${data.lastName}</li>
+            <li><strong>Email:</strong> ${data.email}</li>
+            <li><strong>Phone:</strong> ${data.phone}</li>
+            <li><strong>Newsletter Opt-in:</strong> ${data.newsletterOptIn ? 'Yes' : 'No'}</li>
+            <li><strong>Event Size:</strong> ${data.eventSize} people</li>
+            <li><strong>Event Date:</strong> ${data.eventDate}</li>
+            <li><strong>Toppings:</strong> ${data.toppings.length ? data.toppings.join(', ') : 'None selected'}</li>
+            <li><strong>Drizzle:</strong> ${data.drizzle.length ? data.drizzle.join(', ') : 'None selected'}</li>
+            <li><strong>Fruit Add-ons:</strong> ${data.fruit.length ? data.fruit.join(', ') : 'None selected'}</li>
+            <li><strong>Cold Brew Add-ons:</strong> ${data.coldBrew.length ? data.coldBrew.join(', ') : 'None selected'}</li>
+            <li><strong>Questions:</strong> ${data.instructions || 'None'}</li>
+        </ul>`;
+
+        const detailsBox = document.createElement('div');
+        detailsBox.className = 'summary-details-box';
+        detailsBox.innerHTML = summaryHTML;
+
+        orderSummaryContainer.innerHTML = '';
+        orderSummaryContainer.appendChild(detailsBox);
+
+        pancakeForm.style.display = 'none';
+        confirmationScreen.style.display = 'flex';
+    }
+
+    function handleEditOrder() {
+        confirmationScreen.style.display = 'none';
+        pancakeForm.style.display = 'block';
+    }
+
+    async function handleConfirmSubmit() {
+        cateringLoadingOverlay.classList.add('active');
+        confirmSubmitBtn.disabled = true;
+        confirmSubmitBtn.textContent = 'Submitting...';
+
+        const n8nWebhookUrl = 'https://n8n.joemur.com/webhook/catering-inquiry';
+        const formData = new FormData(pancakeForm);
+        const payload = Object.fromEntries(formData.entries());
+        
+        // Re-add checkbox values correctly
+        payload.toppings = formData.getAll('toppings');
+        payload.drizzle = formData.getAll('drizzle');
+        payload.fruit = formData.getAll('fruit');
+        payload.coldBrew = formData.getAll('coldBrew');
+        payload.timestamp = new Date().toISOString();
+
+        try {
+            const response = await fetch(n8nWebhookUrl, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                confirmationScreen.style.display = 'none';
+                finalConfirmationMessage.style.display = 'flex';
+                setTimeout(() => {
+                    cateringModal.classList.remove('open');
+                    body.classList.remove('modal-open');
+                }, 3000);
+            } else {
+                const errorData = await response.json();
+                alert(`Error: ${errorData.message || 'Server error'}. Please try again.`);
+                handleEditOrder(); // Go back to the form
+            }
+        } catch (error) {
+            alert("A network error occurred. Please check your connection and try again.");
+            handleEditOrder(); // Go back to the form
+        } finally {
+            cateringLoadingOverlay.classList.remove('active');
+            confirmSubmitBtn.disabled = false;
+            confirmSubmitBtn.textContent = 'Confirm & Submit';
+        }
+    }
+
+    // --- Attach all event listeners ONCE ---
+    
+    allInquireButtons.forEach(btn => btn.addEventListener('click', openCateringModal));
+    cateringModal.addEventListener('click', closeCateringModal);
+    
+    pancakeForm.addEventListener('submit', handleCateringFormSubmit);
+    editOrderBtn.addEventListener('click', handleEditOrder);
+    confirmSubmitBtn.addEventListener('click', handleConfirmSubmit);
+    
+    allToppingCheckboxes.forEach(cb => cb.addEventListener('change', () => enforceCheckboxLimit(allToppingCheckboxes, MAX_TOPPINGS)));
+    allDrizzleCheckboxes.forEach(cb => cb.addEventListener('change', () => enforceCheckboxLimit(allDrizzleCheckboxes, MAX_DRIZZLES)));
+    
+    eventSizeInput.addEventListener('input', () => {
+        const value = parseInt(eventSizeInput.value);
+        eventSizeError.style.display = (isNaN(value) || value < 25) ? 'block' : 'none';
+    });
+    
+    // Set min date for event date input
+    document.getElementById('catering-eventDate').min = new Date().toISOString().split("T")[0];
+});
+
 </script>
 
 
